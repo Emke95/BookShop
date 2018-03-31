@@ -1,5 +1,7 @@
 package emma.store.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,6 +23,14 @@ public class UserController {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	public String showUsers(Model model) {
+
+		List<User> users = userDao.findAll();
+		model.addAttribute("usersList", users);
+		return "users";
+	}
 	
 	 @RequestMapping(value = { "/login" }, method = RequestMethod.GET)
 	    public String login(Model model) {

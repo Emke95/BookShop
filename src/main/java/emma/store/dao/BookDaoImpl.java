@@ -1,5 +1,6 @@
 package emma.store.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.apache.commons.lang.StringEscapeUtils;
 
 import emma.store.entity.Book;
+import emma.store.entity.User;
 import emma.store.model.BookInfo;
 
 @Transactional
@@ -92,10 +94,11 @@ public class BookDaoImpl implements BookDao{
 		return query.list();
 	}
 
-	public void delete(BookInfo bookInfo) {
+	public void deleteBook(BookInfo bookInfo) {
 		String isbn = bookInfo.getIsbn();
 		
 		Book book = null;
+		
 		if(isbn!=null) {
 			book = this.findBook(isbn);
 		}
@@ -103,37 +106,14 @@ public class BookDaoImpl implements BookDao{
 		this.sessionFactory.getCurrentSession().delete(book);
 	}
 
-
-	/*public void save(Book book)
-	{
-		try
-		{	
-			Transaction transaction = this.sessionFactory.getCurrentSession().beginTransaction();
-
-			String title = StringEscapeUtils.escapeHtml(book.getTitle());
-			String author = StringEscapeUtils.escapeHtml(book.getAuthor());
-			String category = StringEscapeUtils.escapeHtml(book.getCategory());
-			double price = (book.getPrice());
-			long quantity =(book.getQuantity());
-
-			book.setTitle(title);
-			book.setAuthor(author);
-			book.setCategory(category);
-			book.setPrice(price);
-			book.setQuantity(quantity);
-
-			this.sessionFactory.getCurrentSession().save(book);
-			transaction.commit();
-
-		}
-		catch(Exception ex)
-		{
-			ex.printStackTrace();
-		}
-		finally
-		{
-			this.sessionFactory.getCurrentSession().close();
-		}
-	}*/
+	@Override
+	public String searchAll(Book book, String value, ArrayList<Book> bookList) {
+		Query q = this.sessionFactory.getCurrentSession().createQuery("from Book where (title LIKE :value OR author LIKE :value)");
+		q.setString("value", value + "%");
+		//q.setString("isbn", book.getIsbn());
+		ArrayList<Book> result = (ArrayList<Book>) q.list();
+		StringBuilder html = new StringBuilder();
+		return html.toString();
+	}
 
 }

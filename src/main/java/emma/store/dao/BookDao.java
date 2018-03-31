@@ -1,8 +1,10 @@
 package emma.store.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import emma.store.entity.Book;
+import emma.store.entity.User;
 import emma.store.model.BookInfo;
 
 public interface BookDao {
@@ -15,6 +17,7 @@ public interface BookDao {
 
 	public List<BookInfo> queryBooks(String likeName);
 
-	public void delete(BookInfo bookInfo);
+	public void deleteBook(BookInfo bookInfo);
+	public String searchAll(Book book, String value, ArrayList<Book> bookList);
 
 }

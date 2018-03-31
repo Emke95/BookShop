@@ -1,6 +1,9 @@
 body, html {
     height: 100%;
 }
+.main-chart {
+	padding-top: 20px;
+}
 
 .card-container.card {
     max-width: 350px;
@@ -92,8 +95,8 @@ body, html {
 }
 
 .book-image {
-	max-width: 200px;
-	max-height: 270px;
+	width: 120px;
+height: 150px;
 	padding: 5px 10px 10px 10px;
 	text-align: center;
 }

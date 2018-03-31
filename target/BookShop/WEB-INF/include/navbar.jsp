@@ -8,8 +8,35 @@
 <c:url value="/logout" var="logoutURL" />
 <c:url value="/search" var="searchURL" />
 <c:url value="/books" var="booksUrl" />
-<c:url value="/book/create" var="createBookUrl" />
+<c:url value="/book" var="createBookUrl" />
+<script>
+	var text;
 
+	$(document).ready(function() {
+
+		$("#search").keyup(function() {
+			text = $(this).val();
+			if (text.length > 0) {
+				$.ajax({
+					type : "GET",
+					data : "search=" + text,
+					url : "search",
+					datatype : "text",
+					success : function(data) {
+						$("#searchArea").html(data);
+					},
+					error : function(xhr, ajaxOptions, thrownError) {
+						alert(xhr.status);
+						alert(thrownError);
+					}
+				});
+			} else {
+				$("#searchArea").html("");
+			}
+			return false;
+		});
+	});
+</script>
 <nav class="navbar navbar-inverse">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -59,6 +86,19 @@
 						</div>
 						<button type="submit" class="btn btn-default">Search</button>
 					</form>
+				</li>
+
+
+				<li>
+					<div class="pull-left">
+						<form class="form-inline" role="form">
+							<div class="form-group">
+								<input type="text" style="width: 200px;" class="form-control"
+									id="search" placeholder="Search Everyone">
+							</div>
+							<button type="submit" class="btn btn-theme">Search</button>
+						</form>
+					</div> <!-- /form-panel -->
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

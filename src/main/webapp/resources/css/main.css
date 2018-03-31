@@ -1,6 +1,9 @@
 body, html {
     height: 100%;
 }
+.main-chart {
+	padding-top: 20px;
+}
 
 .card-container.card {
     max-width: 350px;

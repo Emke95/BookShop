@@ -42,9 +42,9 @@ public class UserDaoImpl implements UserDao {
 
 	public List<User> findAll() {
 		String sql = "Select new " + User.class.getName()//
-                + "(u.FirstName, u.LastName, u.email,u.password, u.active,  u.role, u.address) " + " from "
+                + "(u.firstName, u.lastName, u.email,u.password, u.active,  u.role) " + " from "
                 + User.class.getName() + " u "//
-                + " order by u.FirstName desc";
+                + " order by u.firstName desc";
         
         Session session = this.sessionFactory.getCurrentSession();
  

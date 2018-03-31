@@ -1,10 +1,12 @@
 package emma.store.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import emma.store.dao.BookDao;
 import emma.store.entity.Book;
+import emma.store.entity.User;
 import emma.store.model.BookInfo;
 import emma.store.validator.FileValidator;
 
@@ -60,7 +63,7 @@ public class BookController {
 		return "books";
 	}
 
-	@RequestMapping(value= {"/book/create"}, method = RequestMethod.GET)
+	@RequestMapping(value= {"/book"}, method = RequestMethod.GET)
 	public String getBooksPage(Model model, @RequestParam(value = "isbn", defaultValue = "") String isbn) {
 		BookInfo bookInfo = null;
 
@@ -73,39 +76,31 @@ public class BookController {
 			bookInfo.setNewBook(true);
 		}
 		
-		model.addAttribute("book", bookInfo);
-		return"book-create";
+		model.addAttribute("bookForm", bookInfo);
+		return"book";
 	}
 
-	@RequestMapping(value = "/book/edit/{isbn}", method = RequestMethod.GET)
-	public String getEditBookForm(Model model, @PathVariable String isbn) {
 
-		BookInfo bookInfo = bookDao.findBookInfo(isbn);
 
-		model.addAttribute("book", bookInfo);
-
-		return "book-create"; 
-	}
-
-	@RequestMapping(value = "/book/delete/{isbn}", method = RequestMethod.POST)
-	public String postDeleteBook(@PathVariable String isbn) {
+	@RequestMapping(value = "/bookDelete", method = RequestMethod.POST)
+	public String bookDelete(Model model,@RequestParam(value="isbn", defaultValue="")String isbn) {
 		BookInfo bookInfo=null;
 		if (isbn != null && isbn.length()> 0) {
 			bookInfo = bookDao.findBookInfo(isbn);
 		}
 		if(bookInfo!=null)
-			bookDao.delete(bookInfo);
+			bookDao.deleteBook(bookInfo);
 
 		return "redirect:/books";  
 	}
 
 
-	@RequestMapping(value = "/book/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/book", method = RequestMethod.POST)
 	@Transactional(propagation = Propagation.NEVER)
-	public @ResponseBody String postCreateBook(Model model,@ModelAttribute("book") @Validated BookInfo bookInfo, BindingResult result, final RedirectAttributes redirectAttributes) {
+	public String postCreateBook(Model model,@ModelAttribute("bookForm") @Validated BookInfo bookInfo, BindingResult result, final RedirectAttributes redirectAttributes) {
 
 		if (result.hasErrors()) {
-			return "book-create";
+			return "book";
 		}
 		try {
 			bookDao.save(bookInfo);
@@ -113,10 +108,9 @@ public class BookController {
 		catch (Exception e) {
 			String message = e.getMessage();
 			model.addAttribute("message", message);           
-			return "book-create";
+			return "book";
 		}
-
-		return "books"; 
+		return "redirect:/books"; 
 	}
 
 	@RequestMapping(value = { "/bookCover" }, method = RequestMethod.GET)
@@ -134,5 +128,20 @@ public class BookController {
 		}
 
 		response.getOutputStream().close();
+	}
+	
+	@RequestMapping(value = "/search", method = RequestMethod.GET, produces="application/text")
+	public @ResponseBody String search(@RequestParam("search") String value, HttpServletRequest request)
+	{
+		if(value!=null || !value.isEmpty())
+		{
+			HttpSession session = request.getSession();
+			Book book = (Book) session.getAttribute("book");
+			ArrayList<Book> bookList = new ArrayList<>();
+		    String html = bookDao.searchAll(book, value, bookList);
+			return html;
+		}
+		
+		return " ";
 	}
 }

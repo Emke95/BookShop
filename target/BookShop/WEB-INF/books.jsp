@@ -9,44 +9,12 @@
 <c:url value="/book/delete" var="deleteBookUrl" />
 
 <c:url value="/buy/book" var="buyUrl" />
+<c:url value="book/info" var="detailsUrl"/>
 
 <div class="container">
 
 	<h1>List of books</h1>
 
-	<c:forEach items="${bookList}" var="book">
-		<div class="book-box">
-			<ul>
-				<li><a class="btn-details" href="${pageContext.request.contextPath}/bookInfo?isbn=${book.isbn}"><span><b>
-				SeeDetails</b></span></a> 
-				<img class="book-image" src="${pageContext.request.contextPath}/bookCover?isbn=${book.isbn}" />
-
-				</li>
-
-				<li class="book">${book.title}</li>
-				<li class="book">${book.author}</li>
-				<li class="book" >${book.category}</li>
-				<li class="book"><fmt:formatNumber value="${book.price}" type="currency" /></li>
-
-				<security:authorize access="hasRole('USER')">
-					<li class="btn-add"><a href="${pageContext.request.contextPath}/buyBook?isbn=${book.isbn}">Add
-							to cart</a></li>
-				</security:authorize>
-
-				<security:authorize access="hasRole('ADMIN')">
-					<li class=btn-edit><a
-						href="${pageContext.request.contextPath}/book?isbn=${book.isbn}">
-							Edit </a></li>
-					<li class="btn-delete"><a
-						href="${pageContext.request.contextPath}/bookDelete?isbn=${book.isbn}">
-							Delete </a></li>
-				</security:authorize>
-
-			</ul>
-
-
-		</div>
-	</c:forEach>
 
 	<div class="row">
 		<div class="col-md-12">
@@ -59,8 +27,14 @@
 						<th class="text-center">Category</th>
 						<th class="text-center">Price</th>
 						<th class="text-center">Image</th>
-						<th class="text-center col-md-1">Edit</th>
-						<th class="text-center col-md-1">Delete</th>
+						<security:authorize access="hasRole('ADMIN')">
+							<th class="text-center col-md-1">Edit</th>
+							<th class="text-center col-md-1">Delete</th>
+						</security:authorize>
+						<security:authorize access="hasRole('USER')">
+							<th class="text-center col-md-1">See Details</th>
+							<th class="text-center col-md-1">Buy</th>
+						</security:authorize>
 					</tr>
 				</thead>
 				<tbody>
@@ -72,13 +46,24 @@
 							<td>${book.category}</td>
 							<td>${book.price}</td>
 							<td><img class="book-image"
-								src="${pageContext.request.contextPath}/bookImage?isbn=${book.isbn}" />
-							<td class="text-center"><a
-								href="${editBookUrl}/${book.isbn}"
-								class="btn btn-sm btn-primary">Edit</a></td>
-							<td class="text-center"><a
-								href="${deleteBookUrl}/${book.isbn}"
-								class="btn btn-sm btn-danger delete-button">Delete</a></td>
+								src="${pageContext.request.contextPath}/bookCover?isbn=${book.isbn}" />
+
+								<security:authorize access="hasRole('ADMIN')">
+									<!-- <td class="text-center"><a
+										href="${editBookUrl}/${book.isbn}"
+										class="btn btn-sm btn-primary">Edit</a></td> -->
+									<td class="text-center">
+									 <li class=btn-edit><a href="${pageContext.request.contextPath}/book?isbn=${book.isbn}"> Edit </a></li>
+	                </td>
+									<td class="text-center"><a
+										href="${deleteBookUrl}/${book.isbn}"
+										class="btn btn-sm btn-danger delete-button">Delete</a></td>
+								</security:authorize> <security:authorize access="hasRole('USER')">
+									<td class="text-center"><a href="${detailsUrl}/${book.isbn}"
+										class="btn btn-sm btn-primary">See Details</a></td>
+									<td class="text-center"><a href="${buyUrl}/${book.isbn}"
+										class="btn btn-sm btn-primary">Add to Cart</a></td>
+								</security:authorize>
 						</tr>
 					</c:forEach>
 				</tbody>

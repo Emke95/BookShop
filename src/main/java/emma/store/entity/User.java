@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "User")
 public class User {
-	
+
 	public enum Role {
 		USER, ADMIN
 	}
@@ -24,13 +24,13 @@ public class User {
 	@Column(name = "Email", nullable=false, unique= true)
 	@Email
 	private String email;
-	
+
 	@Column(name="Active")
 	private boolean active;
 
 	@Column(name="Password", nullable=false)
 	private String password;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "role", nullable = false)
 	private Role role = Role.USER;
@@ -75,7 +75,7 @@ public class User {
 		this.password = password;
 	}
 
-	
+
 	public Role getRole() {
 		return role;
 	}
@@ -91,5 +91,30 @@ public class User {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+
+	public User() {
+
+	}
+	public User(User user) {
+		this.firstName = user.getFirstName();
+		this.lastName = user.getLastName();
+		this.email = user.getEmail();
+		this.password = user.getPassword();
+		this.role = user.getRole();
+
+	}
 	
+	public User(String firstName, String lastName, String email, String password, boolean active, Role role) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.active = active;
+		this.role = role;
+	}
+	
+	public String toString() {
+		return firstName + lastName + email + password + active + role;
+	}
+
 }
