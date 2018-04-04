@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import emma.store.dao.BookDao;
 import emma.store.entity.Book;
+import emma.store.entity.Category;
 import emma.store.entity.User;
 import emma.store.model.BookInfo;
 import emma.store.validator.FileValidator;
@@ -66,7 +67,7 @@ public class BookController {
 	@RequestMapping(value= {"/book"}, method = RequestMethod.GET)
 	public String getBooksPage(Model model, @RequestParam(value = "isbn", defaultValue = "") String isbn) {
 		BookInfo bookInfo = null;
-
+		Category[] categoryList = Category.values();
 		if(isbn!= null && isbn.length()>0) {
 			bookInfo = bookDao.findBookInfo(isbn);
 		}
@@ -76,6 +77,7 @@ public class BookController {
 			bookInfo.setNewBook(true);
 		}
 		
+		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("bookForm", bookInfo);
 		return"book";
 	}

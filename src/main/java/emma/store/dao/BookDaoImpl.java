@@ -75,7 +75,7 @@ public class BookDaoImpl implements BookDao{
 		if (book == null) {
 			return null;
 		}
-		return new BookInfo(book.getIsbn(), book.getTitle(), book.getAuthor(),book.getCategory(), book.getPrice(), book.getQuantity());
+		return new BookInfo(book.getIsbn(), book.getTitle(), book.getAuthor(), book.getCategory(),book.getPrice(), book.getQuantity());
 	}
 
 	public List<BookInfo> queryBooks(String likeName) {

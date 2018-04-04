@@ -1,6 +1,9 @@
 package emma.store.entity;
 
 import org.hibernate.validator.constraints.Email;
+
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
@@ -34,6 +37,18 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "role", nullable = false)
 	private Role role = Role.USER;
+	
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "shippingAddressId")
+	private ShippingAddress shippingAddress;
+	
+	public ShippingAddress getShippingAddress() {
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(ShippingAddress shippingAddress) {
+		this.shippingAddress = shippingAddress;
+	}
 
 	public int getUserId() {
 		return userId;
@@ -104,7 +119,7 @@ public class User {
 
 	}
 	
-	public User(String firstName, String lastName, String email, String password, boolean active, Role role) {
+	public User(String firstName, String lastName, String email, String password, boolean active, Role role, Set creditCards) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -114,7 +129,7 @@ public class User {
 	}
 	
 	public String toString() {
-		return firstName + lastName + email + password + active + role;
+		return firstName + lastName + email + password + active + role ;
 	}
 
 }

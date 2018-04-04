@@ -1,24 +1,20 @@
 package emma.store.dao;
 
 import java.util.List;
-
 import javax.transaction.Transactional;
-
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import emma.store.entity.ShippingAddress;
 import emma.store.entity.User;
-
 @Transactional
 public class UserDaoImpl implements UserDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-
 
 	public User findByEmail(String email) {
 		Session session = sessionFactory.getCurrentSession();
@@ -27,31 +23,24 @@ public class UserDaoImpl implements UserDao {
 		return (User) crit.uniqueResult();
 	}
 
-	public void register(User user) {
-		User u=new User();				
+	public void register(User user) {	
+		Session session = sessionFactory.openSession();
+		user.setActive(true);
+		session.save(user);
+		session.close();
+	}
 
-		u.setFirstName(user.getFirstName());
-		u.setLastName(user.getLastName());
-		u.setEmail(user.getEmail());
-		u.setPassword(user.getPassword());
-		u.setActive(true);
-
-		this.sessionFactory.getCurrentSession().persist(u);
-
+	public void save(ShippingAddress shippingAddress) {
+		Session session = sessionFactory.openSession();
+		session.save(shippingAddress);
+		session.close();
 	}
 
 	public List<User> findAll() {
-		String sql = "Select new " + User.class.getName()//
-                + "(u.firstName, u.lastName, u.email,u.password, u.active,  u.role) " + " from "
-                + User.class.getName() + " u "//
-                + " order by u.firstName desc";
-        
-        Session session = this.sessionFactory.getCurrentSession();
- 
-        Query query = session.createQuery(sql);
-      
-        return query.list();
+		Session session = sessionFactory.openSession();
+		List<User> users=session.createCriteria(User.class).list();
+		System.out.println(users);
+		session.close();
+		return users;
 	}
-
-
 }

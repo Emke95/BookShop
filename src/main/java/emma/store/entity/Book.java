@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,9 +33,13 @@ public class Book {
 
 	@Column(name="Price", nullable=false)
 	private double price;
+			
+			@Enumerated(EnumType.STRING)
+			@Column(name = "Category")
+			private Category category;
 
-	@Column(name="Category", nullable=false)
-	private String category;
+	//@Column(name="Category", nullable=false)
+	//private String category;
 
 	@Column(name="Image")
 	@Lob
@@ -79,11 +85,11 @@ public class Book {
 		this.price = price;
 	}
 
-	public String getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 

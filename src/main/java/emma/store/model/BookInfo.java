@@ -3,13 +3,14 @@ package emma.store.model;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import emma.store.entity.Book;
+import emma.store.entity.Category;
 
 public class BookInfo {
 
 	private String isbn;
 	private String title;
 	private String author;
-	private String category;
+	private Category category;
 	private double price;
 	private long quantity;
 	private CommonsMultipartFile fileData;
@@ -28,7 +29,7 @@ public class BookInfo {
 		this.quantity = book.getQuantity();
 	}
 
-	public BookInfo(String isbn, String title, String author, String category, double price, long quantity) {
+	public BookInfo(String isbn, String title, String author, Category category, double price, long quantity) {
 		this.isbn = isbn;
 		this.title = title;
 		this.author = author;
@@ -63,14 +64,6 @@ public class BookInfo {
 		this.author = author;
 	}
 
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
 	public double getPrice() {
 		return price;
 	}
@@ -103,5 +96,12 @@ public class BookInfo {
 		this.newBook = newBook;
 	}
 
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 
 }

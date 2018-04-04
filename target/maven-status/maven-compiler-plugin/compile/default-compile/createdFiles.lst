@@ -1,15 +1,17 @@
 emma\store\config\AppInitializer.class
-emma\store\controller\FriendsController.class
+emma\store\entity\CreditCard.class
 emma\store\entity\User$Role.class
 emma\store\config\SecurityConfig.class
 emma\store\model\BookInfo.class
 emma\store\service\UserServiceImpl.class
 emma\store\dao\BookDao.class
 emma\store\validator\FileValidator.class
+emma\store\entity\ShippingAddress.class
 emma\store\controller\AppController.class
 emma\store\config\MvcConfig.class
 emma\store\config\SecurityInitializer.class
 emma\store\service\UserService.class
+emma\store\entity\Category.class
 emma\store\dao\UserDaoImpl.class
 emma\store\controller\BookController.class
 emma\store\dao\BookDaoImpl.class
@@ -18,4 +20,3 @@ emma\store\entity\Book.class
 emma\store\config\AppConfig.class
 emma\store\entity\User.class
 emma\store\dao\UserDao.class
-emma\store\entity\Address.class

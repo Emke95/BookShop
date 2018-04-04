@@ -3,7 +3,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <c:url value="/users" var="usersURL" />
-<c:url value="/address/create" var="createAddressUrl" />
+<c:url value="/address" var="createAddressUrl" />
 <c:url value="/register" var="createUserURL" />
 <c:url value="/logout" var="logoutURL" />
 <c:url value="/search" var="searchURL" />
@@ -107,7 +107,7 @@
 					aria-expanded="false"> <sec:authentication
 							property="principal.username" /> <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="${createAddressUrl}">My account</a></li>
+						<li><a href="${createAddressUrl}">Add address</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="${logoutURL}">Logout</a></li>
 					</ul></li>

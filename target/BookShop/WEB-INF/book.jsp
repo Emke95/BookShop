@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
@@ -53,8 +54,10 @@
 					</tr>
 					<tr>
 						<td class="custom">Category:</td>
-						<td><form:input path="category" /></td>
-						<td><form:errors path="category" class="error-message" /></td>
+						<td><form:select id="category" path="category">
+							<form:option value="" label="Category" />
+							<form:options items="${categoryList}" itemLabel="categoryName" />
+						</form:select></td>
 					</tr>
 					<tr>
 						<td class="custom">Image:</td>

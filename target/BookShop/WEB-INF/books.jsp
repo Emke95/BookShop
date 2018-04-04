@@ -9,7 +9,7 @@
 <c:url value="/book/delete" var="deleteBookUrl" />
 
 <c:url value="/buy/book" var="buyUrl" />
-<c:url value="book/info" var="detailsUrl"/>
+<c:url value="book/info" var="detailsUrl" />
 
 <div class="container">
 
@@ -28,6 +28,7 @@
 						<th class="text-center">Price</th>
 						<th class="text-center">Image</th>
 						<security:authorize access="hasRole('ADMIN')">
+							<th class="text-center col-md-1">Quantity</th>
 							<th class="text-center col-md-1">Edit</th>
 							<th class="text-center col-md-1">Delete</th>
 						</security:authorize>
@@ -49,17 +50,17 @@
 								src="${pageContext.request.contextPath}/bookCover?isbn=${book.isbn}" />
 
 								<security:authorize access="hasRole('ADMIN')">
-									<!-- <td class="text-center"><a
-										href="${editBookUrl}/${book.isbn}"
-										class="btn btn-sm btn-primary">Edit</a></td> -->
+								<td>${book.quantity}</td>
 									<td class="text-center">
-									 <li class=btn-edit><a href="${pageContext.request.contextPath}/book?isbn=${book.isbn}"> Edit </a></li>
-	                </td>
-									<td class="text-center"><a
-										href="${deleteBookUrl}/${book.isbn}"
+									<a href="${pageContext.request.contextPath}/book?isbn=${book.isbn}"
+										class="btn btn-sm btn-primary"> Edit </a>
+									</td>
+									<td class="text-center">
+									<a href="${pageContext.request.contextPath}/bookDelete?isbn=${book.isbn}"
 										class="btn btn-sm btn-danger delete-button">Delete</a></td>
 								</security:authorize> <security:authorize access="hasRole('USER')">
-									<td class="text-center"><a href="${detailsUrl}/${book.isbn}"
+									<td class="text-center"><a
+										href="${detailsUrl}/${book.isbn}"
 										class="btn btn-sm btn-primary">See Details</a></td>
 									<td class="text-center"><a href="${buyUrl}/${book.isbn}"
 										class="btn btn-sm btn-primary">Add to Cart</a></td>
