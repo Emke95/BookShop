@@ -41,7 +41,7 @@ public class FileValidator implements Validator {
 	            if (isbn.matches("\\s+")) {
 	                errors.rejectValue("isbn", "Pattern.bookForm.isbn");
 	            } else if(bookInfo.isNewBook()) {
-	                Book book = bookDao.findBook(isbn);
+	                Book book = bookDao.findBookByIsbn(isbn);
 	                if (book != null) {
 	                    errors.rejectValue("isbn", "Duplicate.bookForm.isbn");
 	                }

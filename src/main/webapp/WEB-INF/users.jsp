@@ -4,8 +4,7 @@
 <%@ include file="/WEB-INF/include/navbar.jsp"%>
 
 
-<c:url value="/users/delete" var="deleteUserURL"/>
-<c:url value="/users/edit" var="editUserURL"/>
+<c:url value="/users/orders" var="viewOrderUrl"/>
 
 <div class="container">
 
@@ -20,7 +19,7 @@
                     <th class="text-center">Last Name</th>
                     <th class="text-center">Email</th>
                     <th class="text-center col-md-1">Edit</th>
-                    <th class="text-center col-md-1">Delete</th>
+                    <th class="text-center col-md-1">See Orders</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -30,8 +29,9 @@
                         <td>${user.getFirstName()}</td>
                         <td>${user.lastName}</td>
                         <td>${user.email}</td>
-                        <td> <a href="${editUserURL}/${user.userId}" class="btn btn-primary">Edit</a> </td>
-                        <td> <a href="${deleteUserURL}/${user.userId}" class="btn btn-danger delete-btn">Delete</a> </td>
+                        <td> <a href="${pageContext.request.contextPath}/updateUserAccount?userId=${user.userId}"
+										class="btn btn-sm btn-primary"> Edit </a></td>
+                        <td> <a href="${viewOrderUrl}/${user.userId}" class="btn btn-sm btn-primary">See Orders</a> </td>
                     </tr>
                     </c:forEach>
 

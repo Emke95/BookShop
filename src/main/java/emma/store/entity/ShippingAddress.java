@@ -1,13 +1,19 @@
 package emma.store.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "ShippingAddress")
 public class ShippingAddress {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="ShippingAddressId")
 	private int shippingAddressId;
 
 	@Column(name="HouseNo", nullable=false)
@@ -24,9 +30,14 @@ public class ShippingAddress {
 
 	@Column(name="Country", nullable=false)
 	private String country;
-	
-	@OneToOne(mappedBy = "shippingAddress")
-	private User user;
+
+	public int getShippingAddressId() {
+		return shippingAddressId;
+	}
+
+	public void setShippingAddressId(int shippingAddressId) {
+		this.shippingAddressId = shippingAddressId;
+	}
 
 	public int getHouseNo() {
 		return houseNo;
@@ -67,21 +78,4 @@ public class ShippingAddress {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public int getShippingAddressId() {
-		return shippingAddressId;
-	}
-
-	public void setShippingAddressId(int shippingAddressId) {
-		this.shippingAddressId = shippingAddressId;
-	}
-
 }

@@ -7,7 +7,7 @@
 <div class="container">
 	<div class="row">
 		<h4>Shipping details</h4>
-		<form:form commandName="address" action="${createAddressURL}" modelAttribute="addressForm" method="POST"
+		<form:form commandName="address" action="${createAddressURL}" modelAttribute="addressForm" method="PUT"
 			role="form" class="form-horizontal" id="formMail">
 			 <input type="hidden" value="${addressId}" name="id"/>
 			

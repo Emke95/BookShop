@@ -2,6 +2,9 @@ package emma.store.entity;
 
 import org.hibernate.validator.constraints.Email;
 
+
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -14,7 +17,7 @@ public class User {
 		USER, ADMIN
 	}
 
-	@Id	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "UserId")
 	private int userId;
 
@@ -38,17 +41,20 @@ public class User {
 	@Column(name = "role", nullable = false)
 	private Role role = Role.USER;
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "shippingAddressId")
-	private ShippingAddress shippingAddress;
 	
-	public ShippingAddress getShippingAddress() {
+	//@OneToOne
+	//@JoinColumn(name="shippingAddressId")
+	//private ShippingAddress  shippingAddress; 
+	
+	/*public ShippingAddress getShippingAddress() {
 		return shippingAddress;
 	}
 
 	public void setShippingAddress(ShippingAddress shippingAddress) {
 		this.shippingAddress = shippingAddress;
-	}
+	}*/
+
+	
 
 	public int getUserId() {
 		return userId;
@@ -90,7 +96,6 @@ public class User {
 		this.password = password;
 	}
 
-
 	public Role getRole() {
 		return role;
 	}
@@ -107,6 +112,7 @@ public class User {
 		this.active = active;
 	}
 
+
 	public User() {
 
 	}
@@ -116,20 +122,21 @@ public class User {
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.role = user.getRole();
+		//this.shippingAddress = user.getShippingAddress();
 
 	}
 	
-	public User(String firstName, String lastName, String email, String password, boolean active, Role role, Set creditCards) {
+	public User(String firstName, String lastName, String email, String password, boolean active, Role role, ShippingAddress shippingAddress) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
 		this.active = active;
 		this.role = role;
+		//this.shippingAddress = shippingAddress;
 	}
 	
 	public String toString() {
-		return firstName + lastName + email + password + active + role ;
+		return firstName + lastName + email + password + active + role /*+ shippingAddress*/;
 	}
-
 }

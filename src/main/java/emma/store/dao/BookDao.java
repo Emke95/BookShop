@@ -10,7 +10,8 @@ import emma.store.model.BookInfo;
 public interface BookDao {
 
 	public void save(BookInfo bookInfo);
-	public Book findBook(String isbn);
+	public Book findBookByIsbn(String isbn);
+	public Book findBookById(int bookId);
 	public BookInfo findBookInfo(String isbn);
 	public List<BookInfo> queryBooks(String likeName);
 	public void deleteBook(BookInfo bookInfo);

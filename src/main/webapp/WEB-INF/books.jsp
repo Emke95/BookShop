@@ -8,8 +8,9 @@
 <c:url value="/book/edit" var="editBookUrl" />
 <c:url value="/book/delete" var="deleteBookUrl" />
 
-<c:url value="/buy/book" var="buyUrl" />
-<c:url value="book/info" var="detailsUrl" />
+<c:url value="/cart/add" var="buyUrl" />
+<c:url value="/book/info" var="detailsUrl" />
+
 
 <div class="container">
 
@@ -71,9 +72,7 @@
 			</table>
 		</div>
 	</div>
-
 </div>
-
 <script>
 	$(function() {
 		$('.delete-button').on('click', function(event) {

@@ -99,5 +99,15 @@ public class AppConfig{
 	public BookDao getBookDao() {
 		return new BookDaoImpl();
 	}
+	
+	@Bean(name="orderDao")
+	public OrderDao getOrderDao() {
+		return new OrderDaoImpl();
+	}
+	
+	@Bean(name="orderDetailsDao")
+	public OrderDetailsDao getOrderDetailsDao() {
+		return new OrderDetailsDaoImpl();
+	}
 }
 

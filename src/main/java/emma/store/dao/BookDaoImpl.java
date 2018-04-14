@@ -30,7 +30,7 @@ public class BookDaoImpl implements BookDao{
 		boolean isNew = false;
 
 		if (isbn !=null) {
-			book = this.findBook(isbn);
+			book = this.findBookByIsbn(isbn);
 		}
 
 		if (book == null) {
@@ -62,16 +62,22 @@ public class BookDaoImpl implements BookDao{
 		this.sessionFactory.getCurrentSession().flush();
 	}
 
-	public Book findBook(String isbn) {
+	public Book findBookByIsbn(String isbn) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria crit = session.createCriteria(Book.class);
 		crit.add(Restrictions.eq("isbn", isbn));
 		return (Book) crit.uniqueResult();
 	}
-
+	
+	public Book findBookById(int bookId) {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria crit = session.createCriteria(Book.class);
+		crit.add(Restrictions.eq("bookId", bookId));
+		return (Book) crit.uniqueResult();
+	}
 
 	public BookInfo findBookInfo(String isbn) {
-		Book book = this.findBook(isbn);
+		Book book = this.findBookByIsbn(isbn);
 		if (book == null) {
 			return null;
 		}
@@ -100,7 +106,7 @@ public class BookDaoImpl implements BookDao{
 		Book book = null;
 		
 		if(isbn!=null) {
-			book = this.findBook(isbn);
+			book = this.findBookByIsbn(isbn);
 		}
 		
 		this.sessionFactory.getCurrentSession().delete(book);

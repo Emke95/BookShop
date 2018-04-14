@@ -121,7 +121,7 @@ public class BookController {
 		Book book = null;
 
 		if (isbn != null) {
-			book = this.bookDao.findBook(isbn);
+			book = this.bookDao.findBookByIsbn(isbn);
 		}
 
 		if (book != null && book.getImage() != null) {

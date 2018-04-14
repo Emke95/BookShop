@@ -1,18 +1,33 @@
 package emma.store.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Pattern;
-
-import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "CreditCard")
 public class CreditCard {
 
-	@Id
+	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="CardId")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String cardId;
+	private int cardId;
+
+	public int getCardId() {
+		return cardId;
+	}
+
+	public void setCardId(int cardId) {
+		this.cardId = cardId;
+	}
 	
 	@Column(name="CardNumber", nullable = false)
 	@Pattern(regexp = "[0-9]{16}")
@@ -29,8 +44,6 @@ public class CreditCard {
 	@Pattern(regexp = "[0-9]{2}/[0-9]{2}")
 	private String expiryDate;
 
-	public CreditCard() {
-	}
 
 	public String getCardNumber() {
 		return cardNumber;
@@ -64,11 +77,4 @@ public class CreditCard {
 		this.expiryDate = expiryDate;
 	}
 
-	public String getCardId() {
-		return cardId;
-	}
-
-	public void setCardId(String cardId) {
-		this.cardId = cardId;
-	}
 }
