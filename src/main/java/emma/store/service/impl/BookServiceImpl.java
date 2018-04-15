@@ -1,4 +1,4 @@
-package emma.store.service;
+package emma.store.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import emma.store.dao.BookDao;
 import emma.store.entity.Book;
+import emma.store.service.BookService;
 
 @Service
 public class BookServiceImpl implements BookService{

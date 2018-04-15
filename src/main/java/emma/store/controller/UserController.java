@@ -1,6 +1,8 @@
 package emma.store.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +28,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import emma.store.service.UserService;
-import emma.store.entity.User;
+import emma.store.entity.*;
 
 @Controller
 @Transactional
@@ -63,14 +65,121 @@ public class UserController {
 		return "redirect:/login";	
 
 	}
+
+	@RequestMapping(value = "/users/delete/{id}", method = RequestMethod.POST)
+	public String deleteUser(@PathVariable Long id) {
+
+		userService.delete(id);
+
+		return "redirect:/users";
+	}
+
+	@RequestMapping("/profile")
+	public String myProfile(Model model, Principal principal) {
+		String email = principal.getName();
+		User user = userService.findByEmail(email);
+		model.addAttribute("user", user);
+		model.addAttribute("userPaymentList", user.getUserPaymentList());
+		model.addAttribute("userShippingList", user.getUserShippingList());
+		model.addAttribute("orderList", user.getOrderList());
+
+		UserShipping userShipping = new UserShipping();
+		model.addAttribute("userShipping", userShipping);
+
+		model.addAttribute("listOfCreditCards", true);
+		model.addAttribute("listOfShippingAddresses", true);
+
+		model.addAttribute("classActiveEdit", true);
+
+		return "profile";
+	}
+
+	@RequestMapping("/listOfShippingAddresses")
+	public String listOfShippingAddresses(
+			Model model, Principal principal, HttpServletRequest request
+			) {
+		String email = principal.getName();
+		User user = userService.findByEmail(email);
+		model.addAttribute("user", user);
+		model.addAttribute("userPaymentList", user.getUserPaymentList());
+		model.addAttribute("userShippingList", user.getUserShippingList());
+		model.addAttribute("orderList", user.getOrderList());
+
+		model.addAttribute("listOfCreditCards", true);
+		model.addAttribute("classActiveShipping", true);
+		model.addAttribute("listOfShippingAddresses", true);
+
+		return "profile";
+	}
+
+	@RequestMapping("/addNewCreditCard")
+	public String addNewCreditCard(Model model, Principal principal){
+
+		String email = principal.getName();
+		User user = userService.findByEmail(email);
+		model.addAttribute("user", user);
+
+		model.addAttribute("addNewCreditCard", true);
+		model.addAttribute("classActiveBilling", true);
+		model.addAttribute("listOfShippingAddresses", true);
+
+		UserBilling userBilling = new UserBilling();
+		UserPayment userPayment = new UserPayment();
+
+
+		model.addAttribute("userBilling", userBilling);
+		model.addAttribute("userPayment", userPayment);
+
+		model.addAttribute("userPaymentList", user.getUserPaymentList());
+		model.addAttribute("userShippingList", user.getUserShippingList());
+		model.addAttribute("orderList", user.getOrderList());
+
+		return "profile";
+	}
+
 	
+	@RequestMapping(value="/addNewCreditCard", method=RequestMethod.POST)
+	public String addNewCreditCard(
+			@ModelAttribute("userPayment") UserPayment userPayment,
+			@ModelAttribute("userBilling") UserBilling userBilling,
+			Principal principal, Model model
+			){
 
-    @RequestMapping(value = "/users/delete/{id}", method = RequestMethod.POST)
-    public String deleteUser(@PathVariable Long id) {
+		String email = principal.getName();
+		User user = userService.findByEmail(email);
+		userService.updateUserBilling(userBilling, userPayment, user);
+		
+		model.addAttribute("user", user);
+		model.addAttribute("userPaymentList", user.getUserPaymentList());
+		model.addAttribute("userShippingList", user.getUserShippingList());
+		model.addAttribute("listOfCreditCards", true);
+		model.addAttribute("classActiveBilling", true);
+		model.addAttribute("listOfShippingAddresses", true);
+		model.addAttribute("orderList", user.getOrderList());
+		
+		return "profile";
+	}
+	
+	@RequestMapping(value="/addNewShippingAddress", method=RequestMethod.POST)
+	public String addNewShippingAddressPost(
+			@ModelAttribute("userShipping") UserShipping userShipping,
+			Principal principal, Model model
+			){
 
-    	userService.delete(id);
-
-        return "redirect:/users";
-    }
+		String email = principal.getName();
+		User user = userService.findByEmail(email);
+		userService.updateUserShipping(userShipping, user);
+		
+		model.addAttribute("user", user);
+		model.addAttribute("userPaymentList", user.getUserPaymentList());
+		model.addAttribute("userShippingList", user.getUserShippingList());
+		model.addAttribute("listOfShippingAddresses", true);
+		model.addAttribute("classActiveShipping", true);
+		model.addAttribute("listOfCreditCards", true);
+		model.addAttribute("orderList", user.getOrderList());
+		
+		return "profile";
+	}
+	
 
 }

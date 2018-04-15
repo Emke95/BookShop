@@ -155,6 +155,11 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>${apache.commons.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>BookShop</finalName>

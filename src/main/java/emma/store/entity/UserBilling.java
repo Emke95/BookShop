@@ -19,6 +19,15 @@ public class UserBilling {
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	private UserPayment userPayment;
+	
+
+	public UserPayment getUserPayment() {
+		return userPayment;
+	}
+
+	public void setUserPayment(UserPayment userPayment) {
+		this.userPayment = userPayment;
+	}
 
 	public Long getId() {
 		return id;

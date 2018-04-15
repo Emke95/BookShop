@@ -3,41 +3,14 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <c:url value="/users" var="usersURL" />
-<c:url value="/address" var="createAddressUrl" />
+<c:url value="/profile" var="profileUrl" />
 <c:url value="/register" var="createUserURL" />
 <c:url value="/logout" var="logoutURL" />
 <c:url value="/searchBook" var="searchURL" />
 <c:url value="/searchAuth" var="searchAuthURL" />
 <c:url value="/books" var="booksUrl" />
 <c:url value="/book" var="createBookUrl" />
-<script>
-	var text;
 
-	$(document).ready(function() {
-
-		$("#search").keyup(function() {
-			text = $(this).val();
-			if (text.length > 0) {
-				$.ajax({
-					type : "GET",
-					data : "search=" + text,
-					url : "search",
-					datatype : "text",
-					success : function(data) {
-						$("#searchArea").html(data);
-					},
-					error : function(xhr, ajaxOptions, thrownError) {
-						alert(xhr.status);
-						alert(thrownError);
-					}
-				});
-			} else {
-				$("#searchArea").html("");
-			}
-			return false;
-		});
-	});
-</script>
 <nav class="navbar navbar-inverse">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -112,7 +85,7 @@
 					aria-expanded="false"> <sec:authentication
 							property="principal.username" /> <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="${createAddressUrl}">Add address</a></li>
+						<li><a href="${profileUrl}">My Profile</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="${logoutURL}">Logout</a></li>
 					</ul></li>

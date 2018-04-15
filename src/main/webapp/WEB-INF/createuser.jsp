@@ -18,7 +18,7 @@
     <div class="row">
         <form action="${createUserURL}" method="post" role="form" class="form-horizontal">
 
-            <input type="hidden" value="${user.userId}" name="id"/>
+            <input type="hidden" value="${user.id}" name="id"/>
 
             <div class="form-group">
                 <label class="control-label col-sm-2" for="firstName">First name:</label>

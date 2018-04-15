@@ -8,7 +8,7 @@
 <c:url value="/book/edit" var="editBookUrl" />
 <c:url value="/book/delete" var="deleteBookUrl" />
 
-<c:url value="/cart/add" var="buyUrl" />
+<c:url value="/addItem" var="buyUrl" />
 <c:url value="/book/info" var="detailsUrl" />
 
 <div class="container">
@@ -62,7 +62,7 @@
 									<td class="text-center"><a
 										href="${detailsUrl}/${book.isbn}"
 										class="btn btn-sm btn-primary">See Details</a></td>
-									<td class="text-center"><a href="${buyUrl}/${book.isbn}"
+									<td class="text-center"><a href="${buyUrl}"
 										class="btn btn-sm btn-primary">Add to Cart</a></td>
 								</security:authorize>
 						</tr>

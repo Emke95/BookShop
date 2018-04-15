@@ -1,6 +1,7 @@
 package emma.store.entity;
 
 import javax.persistence.*;
+
 @Entity
 @Table(name="UserPayment")
 public class UserPayment {
@@ -11,6 +12,9 @@ public class UserPayment {
 	
 	@Column(name="Type")
 	private String type;
+	
+@Column(name="CardName")
+	private String cardName;
 
 	@Column(name="CardNumber")
 	private String cardNumber;
@@ -32,6 +36,9 @@ public class UserPayment {
 	@ManyToOne
 	@JoinColumn(name="userId")
 	private User user;
+	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "userPayment")
+	private UserBilling userBilling;
 
 	public Long getId() {
 		return id;
@@ -105,5 +112,21 @@ public class UserPayment {
 		this.user = user;
 	}
 
+	public UserBilling getUserBilling() {
+		return userBilling;
+	}
 
+	public void setUserBilling(UserBilling userBilling) {
+		this.userBilling = userBilling;
+	}
+
+	public String getCardName() {
+		return cardName;
+	}
+
+	public void setCardName(String cardName) {
+		this.cardName = cardName;
+	}
+
+ 
 }

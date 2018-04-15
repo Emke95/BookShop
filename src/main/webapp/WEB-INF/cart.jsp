@@ -24,11 +24,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="book" items="${cart.contents}">
+					<c:forEach var="cartItem" items="${cartItemList}">
 						<tr>
-							<td><c:out value="${book.key.title}" /></td>
-							<td><c:out value="${book.value}" /></td>
-							<td>$<c:out value="${book.key.price}" />
+							<td><c:out value="${cartItem.book.title}" /></td>
+							<td><c:out value="${cartItem.qty}" /></td>
+							<td>$<c:out value="${cartItem.book.price}" />
 							</td>
 						</tr>
 					</c:forEach>
@@ -37,7 +37,7 @@
 					<tr>
 						<td>Total</td>
 						<td></td>
-						<td>$${cart.totalCost}</td>
+						<td>$${shoppingCart.grandTotal}</td>
 					</tr>
 				</tbody>
 			</table>

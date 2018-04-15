@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -50,7 +51,7 @@ public class User {
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
 	private ShoppingCart shoppingCart;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	private List<Orders> orderList;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
@@ -58,35 +59,7 @@ public class User {
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private List<UserPayment> userPaymentList;
-	
-	
-	/*@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private List<UserShipping> userShippingList;
-
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private List<UserPayment> userPaymentList;
-
-	@OneToMany(mappedBy = "user")
-	private List<Order> orderList;
-
-
-	/*
-	//@OneToOne
-	//@JoinColumn(name="shippingAddressId")
-	//private ShippingAddress  shippingAddress; 
-
-	/*public ShippingAddress getShippingAddress() {
-		return shippingAddress;
-	}
-
-	public void setShippingAddress(ShippingAddress shippingAddress) {
-		this.shippingAddress = shippingAddress;
-	}*/
-
-
-
-	public String getFirstName() {
+		public String getFirstName() {
 		return firstName;
 	}
 
