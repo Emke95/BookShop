@@ -37,7 +37,6 @@
 							</security:authorize>
 							<security:authorize access="hasRole('USER')">
 								<th class="text-center col-md-1">Quantity</th>
-								<th class="text-center col-md-1">See Details</th>
 								<th class="text-center col-md-1">Buy</th>
 								<th class="text-center col-md-1">Available</th>
 							</security:authorize>
@@ -67,9 +66,6 @@
 												<option "qty : ${qtyList}" value="${qty}" text="${qty}"
 													selected="qty">1</option>
 										</select></td>
-										<td class="text-center"><a
-											href="${detailsUrl}/${book.id}"
-											class="btn btn-sm btn-primary">See Details</a></td>
 										<td class="text-center"><a
 											href="${buyUrl}${book.id}&qty=1"
 											class="btn btn-sm btn-primary">Add to Cart</a></td>

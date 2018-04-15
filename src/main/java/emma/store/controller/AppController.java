@@ -8,8 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,7 +37,7 @@ public class AppController {
 		return "main";
 	}
 
-	@RequestMapping("/bookDetail")
+	/*@RequestMapping("/bookDetail")
 	public String bookDetail(
 			@PathParam("id") Long id, Model model, Principal principal
 			) {
@@ -59,6 +57,6 @@ public class AppController {
 		model.addAttribute("qty", 1);
 
 		return "bookDetail";
-	}
+	}*/
 
 }

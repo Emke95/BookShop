@@ -46,7 +46,8 @@
 					</tr>
 				</tbody>
 			</table>
-			<input type="submit" value="Confirm Order"></input>
+			<a class="btn btn-primary"
+			href="${pageContext.request.contextPath}/checkout?id=${shoppingCart.id}">Check Out</a>
 		</form>
 
 	</div>

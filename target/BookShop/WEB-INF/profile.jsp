@@ -28,7 +28,7 @@
 					</tr>
 				</thead>
 				<tbody>
-						<form action="/addNewCreditCard" method="post">
+						<form action="${addCredCardUrl}" method="post">
 							<div class="bg-info" th:if="${updateUserPaymentInfo}">User
 								info updated.</div>
 
