@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ import emma.store.service.CartItemService;
 import emma.store.service.ShoppingCartService;
 import emma.store.service.UserService;
 
-
+@Transactional
 @Controller
 public class ShoppingController {
 
@@ -80,14 +81,14 @@ public class ShoppingController {
 		cartItem.setQty(qty);
 		cartItemService.updateCartItem(cartItem);
 
-		return "forward:/shoppingCart/cart";
+		return "forward:/cart";
 	}
 
 	@RequestMapping("/removeItem")
 	public String removeItem(@RequestParam("id") Long id) {
 		cartItemService.removeCartItem(cartItemService.findById(id));
 
-		return "forward:/shoppingCart/cart";
+		return "forward:/cart";
 	}
 }
 

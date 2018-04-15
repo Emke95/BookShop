@@ -21,6 +21,7 @@
 						<th class="text-center">Book</th>
 						<th class="text-center">Quantity</th>
 						<th class="text-center">Price</th>
+						<th class="text-center">Remove</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -29,7 +30,11 @@
 							<td><c:out value="${cartItem.book.title}" /></td>
 							<td><c:out value="${cartItem.qty}" /></td>
 							<td>$<c:out value="${cartItem.book.price}" />
-							</td>
+							<td class="text-center"><a
+								href="${pageContext.request.contextPath}/removeItem?id=${cartItem.id}"
+								class="btn btn-sm btn-danger delete-button">Delete</a></td>
+
+
 						</tr>
 					</c:forEach>
 

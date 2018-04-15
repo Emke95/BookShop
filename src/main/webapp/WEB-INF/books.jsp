@@ -39,6 +39,7 @@
 								<th class="text-center col-md-1">Quantity</th>
 								<th class="text-center col-md-1">See Details</th>
 								<th class="text-center col-md-1">Buy</th>
+								<th class="text-center col-md-1">Available</th>
 							</security:authorize>
 						</tr>
 					</thead>
@@ -69,11 +70,15 @@
 										<td class="text-center"><a
 											href="${detailsUrl}/${book.id}"
 											class="btn btn-sm btn-primary">See Details</a></td>
-										<td>
-											<button type="submit" class="btn btn-warning"
-												style="color: black; border: 1px solid black; padding: 10px 40px 10px 40px;">Add
-												to Cart</button>
-										</td>
+										<td class="text-center"><a
+											href="${buyUrl}${book.id}&qty=1"
+											class="btn btn-sm btn-primary">Add to Cart</a></td>
+										<td><c:choose>
+												<c:when test="${book.quantity > 1}"> In stock.
+												</c:when>
+												<c:otherwise>
+												Unavailable</c:otherwise>
+											</c:choose>
 									</security:authorize>
 							</tr>
 						</c:forEach>
