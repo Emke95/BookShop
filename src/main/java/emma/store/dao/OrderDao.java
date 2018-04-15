@@ -1,19 +1,11 @@
 package emma.store.dao;
 
-import java.util.List;
-import java.util.Map;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import emma.store.entity.*;
+import emma.store.entity.Orders;
 
-public interface OrderDao {
-	
-void addOrder(Order order);
-	
-	void addOrder(Map<Book, Integer> cartContents, User purchasedBy);
-	
-	void deleteOrder(int orderId);
+@Repository
+public interface OrderDao extends JpaRepository<Orders, Long> {
 
-	Order findOrderById(int orderId);
-	
-	List<Order> findAllOrders();
 }

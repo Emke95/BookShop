@@ -7,7 +7,9 @@ import javax.servlet.ServletRegistration;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
+
 
 public class AppInitializer implements WebApplicationInitializer {
 
@@ -28,7 +30,5 @@ public class AppInitializer implements WebApplicationInitializer {
 		characterEncodingFilter.setForceEncoding(true);
 		servletContext.addFilter("characterEncodingFilter", characterEncodingFilter).addMappingForUrlPatterns(null,
 				true, "/*");
-
-
 	}
 }

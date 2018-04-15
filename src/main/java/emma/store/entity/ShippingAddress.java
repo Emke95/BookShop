@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,7 +15,7 @@ public class ShippingAddress {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="ShippingAddressId")
-	private int shippingAddressId;
+	private Long id;
 
 	@Column(name="HouseNo", nullable=false)
 	private int houseNo;
@@ -30,13 +31,16 @@ public class ShippingAddress {
 
 	@Column(name="Country", nullable=false)
 	private String country;
+	
+	@OneToOne
+	private Orders orders;
 
-	public int getShippingAddressId() {
-		return shippingAddressId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setShippingAddressId(int shippingAddressId) {
-		this.shippingAddressId = shippingAddressId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public int getHouseNo() {
@@ -78,4 +82,15 @@ public class ShippingAddress {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-}
+
+	public Orders getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Orders orders) {
+		this.orders = orders;
+	}
+	
+	
+	
+	}

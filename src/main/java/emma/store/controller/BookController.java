@@ -17,23 +17,25 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import emma.store.dao.BookDao;
+import emma.store.service.BookService;
+import emma.store.validator.FileValidator;
 import emma.store.entity.Book;
 import emma.store.entity.Category;
-import emma.store.entity.User;
-import emma.store.model.BookInfo;
-import emma.store.validator.FileValidator;
-
 
 @Controller
 public class BookController {
-
 	@Autowired
-	private BookDao  bookDao;
+	private BookService  bookService;
 
 	@Autowired
 	private FileValidator fileValidator;
@@ -47,7 +49,7 @@ public class BookController {
 		}
 		System.out.println("Target=" + obj);
 
-		if (obj.getClass() == BookInfo.class) {
+		if (obj.getClass() == Book.class) {
 			dataBinder.setValidator(fileValidator);
 			// For upload Image.
 			dataBinder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
@@ -58,40 +60,40 @@ public class BookController {
 	public String listBooksPage(Model model,@RequestParam(value = "title", defaultValue = "") String likeName)
 	{
 
-		List<BookInfo> bookList = bookDao.queryBooks(likeName);
+		List<Book> bookList = bookService.findAll();
 
 		model.addAttribute("bookList", bookList);
 		return "books";
 	}
 
 	@RequestMapping(value= {"/book"}, method = RequestMethod.GET)
-	public String getBooksPage(Model model, @RequestParam(value = "isbn", defaultValue = "") String isbn) {
-		BookInfo bookInfo = null;
+	public String getBooksPage(Model model) {
+		Book book = new Book();
 		Category[] categoryList = Category.values();
-		if(isbn!= null && isbn.length()>0) {
-			bookInfo = bookDao.findBookInfo(isbn);
-		}
 
-		if(bookInfo == null) {
-			bookInfo = new BookInfo();
-			bookInfo.setNewBook(true);
-		}
-		
 		model.addAttribute("categoryList", categoryList);
-		model.addAttribute("bookForm", bookInfo);
+		model.addAttribute("bookForm", book);
 		return"book";
 	}
 
+	@RequestMapping(value = "/book/edit/{isbn}", method = RequestMethod.GET)
+	public String getEditBookForm(Model model, @PathVariable String isbn) {
 
+		Book book = bookService.findByIsbn(isbn);
 
-	@RequestMapping(value = "/bookDelete", method = RequestMethod.POST)
+		model.addAttribute("bookForm", book);
+
+		return "book"; 
+	}
+
+	@RequestMapping(value = "/book/delete", method = RequestMethod.POST)
 	public String bookDelete(Model model,@RequestParam(value="isbn", defaultValue="")String isbn) {
-		BookInfo bookInfo=null;
+		Book book=null;
 		if (isbn != null && isbn.length()> 0) {
-			bookInfo = bookDao.findBookInfo(isbn);
+			book = bookService.findByIsbn(isbn);
 		}
-		if(bookInfo!=null)
-			bookDao.deleteBook(bookInfo);
+		if(book!=null)
+			bookService.deleteBook(book);
 
 		return "redirect:/books";  
 	}
@@ -99,17 +101,15 @@ public class BookController {
 
 	@RequestMapping(value = "/book", method = RequestMethod.POST)
 	@Transactional(propagation = Propagation.NEVER)
-	public String postCreateBook(Model model,@ModelAttribute("bookForm") @Validated BookInfo bookInfo, BindingResult result, final RedirectAttributes redirectAttributes) {
+	public String postCreateBook(@ModelAttribute("bookForm") @Valid Book book, BindingResult result) {
 
 		if (result.hasErrors()) {
 			return "book";
 		}
 		try {
-			bookDao.save(bookInfo);
+			bookService.save(book);
 		}
 		catch (Exception e) {
-			String message = e.getMessage();
-			model.addAttribute("message", message);           
 			return "book";
 		}
 		return "redirect:/books"; 
@@ -121,7 +121,7 @@ public class BookController {
 		Book book = null;
 
 		if (isbn != null) {
-			book = this.bookDao.findBookByIsbn(isbn);
+			book = this.bookService.findByIsbn(isbn);
 		}
 
 		if (book != null && book.getImage() != null) {
@@ -130,20 +130,5 @@ public class BookController {
 		}
 
 		response.getOutputStream().close();
-	}
-	
-	@RequestMapping(value = "/search", method = RequestMethod.GET, produces="application/text")
-	public @ResponseBody String search(@RequestParam("search") String value, HttpServletRequest request)
-	{
-		if(value!=null || !value.isEmpty())
-		{
-			HttpSession session = request.getSession();
-			Book book = (Book) session.getAttribute("book");
-			ArrayList<Book> bookList = new ArrayList<>();
-		    String html = bookDao.searchAll(book, value, bookList);
-			return html;
-		}
-		
-		return " ";
 	}
 }

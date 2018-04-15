@@ -75,6 +75,15 @@
 						<li role="separator" class="divider"></li>
 						<li><a href="${booksUrl}">Show all</a></li>
 					</ul></li>
+					
+				<sec:authorize access="hasRole('USER')">
+				
+					<li><a href="<c:url value="/cart"/>"> 
+						Cart[<c:forEach var="book" items="${cart.contents}"></c:forEach>]
+						
+					</a></li>
+
+				</sec:authorize>
 			</ul>
 			<ul class="nav navbar-nav navbar-center">
 				<li>

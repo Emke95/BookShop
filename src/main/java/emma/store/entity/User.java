@@ -1,13 +1,19 @@
 package emma.store.entity;
 
-import org.hibernate.validator.constraints.Email;
-
-
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import org.hibernate.validator.constraints.Email;
 
 @Entity
 @Table(name = "User")
@@ -19,7 +25,7 @@ public class User {
 
 	@Id	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "UserId")
-	private int userId;
+	private long id;
 
 	@Column(name = "FirstName", nullable=false)
 	private String firstName;
@@ -40,12 +46,36 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "role", nullable = false)
 	private Role role = Role.USER;
+
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+	private ShoppingCart shoppingCart;
+
+	@OneToMany(mappedBy = "user")
+	private List<Orders> orderList;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	private List<UserShipping> userShippingList;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	private List<UserPayment> userPaymentList;
 	
 	
+	/*@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	private List<UserShipping> userShippingList;
+
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	private List<UserPayment> userPaymentList;
+
+	@OneToMany(mappedBy = "user")
+	private List<Order> orderList;
+
+
+	/*
 	//@OneToOne
 	//@JoinColumn(name="shippingAddressId")
 	//private ShippingAddress  shippingAddress; 
-	
+
 	/*public ShippingAddress getShippingAddress() {
 		return shippingAddress;
 	}
@@ -54,18 +84,57 @@ public class User {
 		this.shippingAddress = shippingAddress;
 	}*/
 
-	
 
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
 
 	public String getFirstName() {
 		return firstName;
+	}
+
+
+	public List<UserPayment> getUserPaymentList() {
+		return userPaymentList;
+	}
+
+
+	public void setUserPaymentList(List<UserPayment> userPaymentList) {
+		this.userPaymentList = userPaymentList;
+	}
+
+
+	public List<UserShipping> getUserShippingList() {
+		return userShippingList;
+	}
+
+
+	public void setUserShippingList(List<UserShipping> userShippingList) {
+		this.userShippingList = userShippingList;
+	}
+
+
+	public List<Orders> getOrderList() {
+		return orderList;
+	}
+
+
+	public void setOrderList(List<Orders> orderList) {
+		this.orderList = orderList;
+	}
+
+
+	public ShoppingCart getShoppingCart() {
+		return shoppingCart;
+	}
+
+	public void setShoppingCart(ShoppingCart shoppingCart) {
+		this.shoppingCart = shoppingCart;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public void setFirstName(String firstName) {
@@ -125,8 +194,8 @@ public class User {
 		//this.shippingAddress = user.getShippingAddress();
 
 	}
-	
-	public User(String firstName, String lastName, String email, String password, boolean active, Role role, ShippingAddress shippingAddress) {
+
+	public User(String firstName, String lastName, String email, String password, boolean active, Role role) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -135,8 +204,9 @@ public class User {
 		this.role = role;
 		//this.shippingAddress = shippingAddress;
 	}
-	
+
 	public String toString() {
 		return firstName + lastName + email + password + active + role /*+ shippingAddress*/;
 	}
+
 }

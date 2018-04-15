@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import emma.store.dao.UserDao;
+import emma.store.entity.ShoppingCart;
 import emma.store.entity.User;
 
 @Service
@@ -38,8 +39,12 @@ public class UserServiceImpl  implements UserService{
 	}
 
 	@Override
-	public void register(User user) {
-		userDao.register(user);
+	public void save(User user) {
+		user.setActive(true);
+		ShoppingCart shoppingCart = new ShoppingCart();
+		shoppingCart.setUser(user);
+		user.setShoppingCart(shoppingCart);
+		userDao.save(user);
 	}
 
 	@Override
@@ -50,6 +55,16 @@ public class UserServiceImpl  implements UserService{
 	@Override
 	public List<User> findAll() {
 		return userDao.findAll();
+	}
+
+	
+	@Override
+	public void delete(Long id) {
+		userDao.delete(id);
+	}
+
+	public User findOne(Long id) {
+		return userDao.findOne(id);
 	}
 	
 }
