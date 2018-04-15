@@ -40,11 +40,11 @@ public class AppController {
 	}
 
 
-	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String search() {
-
-		return "searchBook";
-	}
+//	@RequestMapping(value = "/search", method = RequestMethod.GET)
+//	public String search() {
+//
+//		return "searchBook";
+//	}
 
 
 }

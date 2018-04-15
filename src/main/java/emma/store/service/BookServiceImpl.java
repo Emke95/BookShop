@@ -64,6 +64,35 @@ public class BookServiceImpl implements BookService{
 
 	@Override
 	public void deleteBook(Book book) {
-		 bookDao.delete(book);	}
+		bookDao.delete(book);	}
+
+	@Override
+	public List<Book> findByCategory(String category) {
+		List<Book> bookList = bookDao.findByCategory(category);
+
+		List<Book> activeBookList = new ArrayList<>();
+
+		for (Book book: bookList) {
+			//if(book.isActive()) {
+				activeBookList.add(book);
+			
+		}
+
+		return activeBookList;
+	}
+
+	@Override
+	public List<Book> blurryAuthSearch(String author) {
+		List<Book> bookList = bookDao.findByAuthorContaining(author);
+		List<Book> activeBookList = new ArrayList<>();
+
+		for (Book book: bookList) {
+			if(book.getQuantity() > 0) {
+				activeBookList.add(book);
+			}
+		}
+
+		return activeBookList;
+	}
 
 }

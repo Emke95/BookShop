@@ -6,7 +6,8 @@
 <c:url value="/address" var="createAddressUrl" />
 <c:url value="/register" var="createUserURL" />
 <c:url value="/logout" var="logoutURL" />
-<c:url value="/search" var="searchURL" />
+<c:url value="/searchBook" var="searchURL" />
+<c:url value="/searchAuth" var="searchAuthURL" />
 <c:url value="/books" var="booksUrl" />
 <c:url value="/book" var="createBookUrl" />
 <script>
@@ -75,39 +76,34 @@
 						<li role="separator" class="divider"></li>
 						<li><a href="${booksUrl}">Show all</a></li>
 					</ul></li>
-					
+
 				<sec:authorize access="hasRole('USER')">
-				
-					<li><a href="<c:url value="/cart"/>"> 
-						Cart[<c:forEach var="book" items="${cart.contents}"></c:forEach>]
-						
+
+					<li><a href="<c:url value="/cart"/>"> Cart[<c:forEach
+								var="book" items="${cart.contents}"></c:forEach>]
+
 					</a></li>
 
 				</sec:authorize>
 			</ul>
 			<ul class="nav navbar-nav navbar-center">
 				<li>
-					<form class="navbar-form navbar-left" method="get"
-						action="${searchURL}">
-						<div class="form-group" role="search">
-							<input type="text" name="searchTerm" class="form-control"
-								placeholder="Book title">
+					<form class="navbar-form" action="${searchURL}" method="post">
+						<div class="form-group">
+							<input type="text" name="keyword" class="form-control"
+								placeholder="Book title" />
 						</div>
 						<button type="submit" class="btn btn-default">Search</button>
 					</form>
 				</li>
-
-
 				<li>
-					<div class="pull-left">
-						<form class="form-inline" role="form">
-							<div class="form-group">
-								<input type="text" style="width: 200px;" class="form-control"
-									id="search" placeholder="Search Everyone">
-							</div>
-							<button type="submit" class="btn btn-theme">Search</button>
-						</form>
-					</div> <!-- /form-panel -->
+					<form class="navbar-form" action="${searchAuthURL}" method="post">
+						<div class="form-group">
+							<input type="text" name="keyword" class="form-control"
+								placeholder="Author" />
+						</div>
+						<button type="submit" class="btn btn-default">Search</button>
+					</form>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
