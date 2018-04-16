@@ -1,28 +1,36 @@
 package emma.store.controller;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import emma.store.entity.*;
 import emma.store.service.*;
 
 @Controller
 public class OrderController {
+	
 	private ShippingAddress shippingAddress = new ShippingAddress();
 	private BillingAddress billingAddress = new BillingAddress();
 	private Payment payment = new Payment();
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	BookService bookService;
 
 	@Autowired
 	private CartItemService cartItemService;
@@ -44,6 +52,12 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private OrderDemoService orderDemoService;
+	
+	@Autowired
+	private Cart cart;
 
 	@RequestMapping(value = "/orders", method = RequestMethod.GET)
 	public String showOrders(Model model) {
@@ -103,9 +117,7 @@ public class OrderController {
 		} else {
 			model.addAttribute("emptyShippingList", false);
 		}
-
-		ShoppingCart shoppingCart = user.getShoppingCart();
-
+		
 		for (UserShipping userShipping : userShippingList) {
 			if (userShipping.isUserShippingDefault()) {
 				shippingAddressService.setByUserShipping(userShipping, shippingAddress);
@@ -158,11 +170,9 @@ public class OrderController {
 
 		User user = userService.findByEmail(email);
 
-		//Orders orders = orderService.createOrders(shoppingCart, shippingAddress, payment, user);
+		orderService.createOrders(shoppingCart, shippingAddress, payment, user);
 
 		shoppingCartService.clearShoppingCart(shoppingCart);
-
-		LocalDate today = LocalDate.now();
 
 		return "orderSubmittedPage";
 	}
@@ -214,8 +224,7 @@ public class OrderController {
 			Model model) {
 		User user = userService.findByEmail(principal.getName());
 		UserPayment userPayment = userPaymentService.findById(userPaymentId);
-		UserBilling userBilling = userPayment.getUserBilling();
-
+		
 		if (userPayment.getUser().getId() != user.getId()) {
 			return "badRequestPage";
 		} else {
@@ -249,4 +258,34 @@ public class OrderController {
 			return "checkout";
 		}
 	}
+	
+	// Simple Cart methods for demo
+	
+	@RequestMapping(value = "/cart", method = RequestMethod.GET)
+	public String showCart(Model model){
+		model.addAttribute(cart);
+		return "cart";
+	}
+
+	@RequestMapping(value = "cart/add/{isbn}")
+	public String addToCart(@PathVariable("isbn") String isbn, @RequestHeader("referer") String referedFrom) {
+		Book book = bookService.findByIsbn(isbn);
+		cart.addBook(book, 1);
+		return "redirect:/cart";
+	}
+
+	@RequestMapping(value = "/confirmOrder", method = RequestMethod.POST)
+	public String confirmOrder(HttpSession httpSession, RedirectAttributes redirectAttributes, Principal principal){
+		if(cart.getContents().isEmpty()) {
+			redirectAttributes.addFlashAttribute("cartMessage", "Cart is empty. Please add books to the cart to make order.");
+			return "redirect:/cart";
+		}
+		else
+		{
+			String email = principal.getName();
+			orderDemoService.addOrderDemo(cart.getContents(), userService.findByEmail(email));
+			redirectAttributes.addFlashAttribute("cartMessage", "Order is confirmed. Total cost: " + cart.getTotalCost());
+			cart.clearCart();
+			return "redirect:/cart";
+		}	}
 }

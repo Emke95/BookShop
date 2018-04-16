@@ -2,7 +2,6 @@ package emma.store.entity;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table(name="UserShipping")
 public class UserShipping {

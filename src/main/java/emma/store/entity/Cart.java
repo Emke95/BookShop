@@ -1,9 +1,7 @@
 package emma.store.entity;
-import java.util.ArrayList;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -50,6 +48,4 @@ public class Cart {
 		}
 		return totalCost;
 	}
-
-
 } 

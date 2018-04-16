@@ -9,7 +9,9 @@ public class Counties {
 
 	public final static String IE = "IE";
 
+	@SuppressWarnings("serial")
 	public final static Map<String, String> mapOfIECounties = new HashMap<String, String>() {
+
 		{
 			put("AN", "Antrim");
 			put("AM", "Armagh");

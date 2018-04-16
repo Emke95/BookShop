@@ -33,9 +33,6 @@ public class Orders {
 	@ManyToOne
 	private User user;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "orders")
-	private List<OrderDetails> orderDetails;
-	
 	public Long getId() {
 		return id;
 	}
@@ -76,15 +73,6 @@ public class Orders {
 		this.user = user;
 	}
 	
-	
-
-	public List<OrderDetails> getOrderDetails() {
-		return orderDetails;
-	}
-
-	public void setOrderDetails(List<OrderDetails> orderDetails) {
-		this.orderDetails = orderDetails;
-	}
 
 	public ShippingAddress getShippingAddress() {
 		return shippingAddress;

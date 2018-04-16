@@ -1,6 +1,7 @@
 package emma.store.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import emma.store.entity.CartItem;
+import emma.store.entity.ShoppingCart;
 import emma.store.entity.User;
 import emma.store.entity.Book;
 import emma.store.service.BookService;
@@ -34,22 +36,22 @@ public class ShoppingController {
 	@Autowired
 	private ShoppingCartService shoppingCartService;
 
-//	@RequestMapping("/cart")
-//	public String shoppingCart(Model model, Principal principal) {
-//
-//		String email = principal.getName();
-//		User user = userService.findByEmail(email);
-//		ShoppingCart shoppingCart = user.getShoppingCart();
-//
-//		List<CartItem> cartItemList = cartItemService.findByShoppingCart(shoppingCart);
-//
-//		shoppingCartService.updateShoppingCart(shoppingCart);
-//
-//		model.addAttribute("cartItemList", cartItemList);
-//		model.addAttribute("shoppingCart", shoppingCart);
-//
-//		return "cart";
-//	}
+	@RequestMapping("/newcart")
+	public String shoppingCart(Model model, Principal principal) {
+
+		String email = principal.getName();
+		User user = userService.findByEmail(email);
+		ShoppingCart shoppingCart = user.getShoppingCart();
+
+		List<CartItem> cartItemList = cartItemService.findByShoppingCart(shoppingCart);
+
+		shoppingCartService.updateShoppingCart(shoppingCart);
+
+		model.addAttribute("cartItemList", cartItemList);
+		model.addAttribute("shoppingCart", shoppingCart);
+
+		return "cart";
+	}
 
 	@RequestMapping("/addItem")
 	public String addItem(
@@ -65,7 +67,7 @@ public class ShoppingController {
 			return "redirect:/main";
 		}
 
-		CartItem cartItem = cartItemService.addBookToCartItem(book, user, Integer.parseInt(qty));
+		cartItemService.addBookToCartItem(book, user, Integer.parseInt(qty));
 		model.addAttribute("addBookSuccess", true);
 
 		return "redirect:/books";
