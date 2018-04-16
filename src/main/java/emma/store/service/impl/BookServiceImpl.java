@@ -101,6 +101,35 @@ public class BookServiceImpl implements BookService{
 
 		return activeBookList;
 	}
+	
+	@Override
+	public List<Book> IsbnAscending() {
+		List<Book> bookList = bookDao.findAllByOrderByIsbnAsc();
+		List<Book> activeBookList = new ArrayList<>();
+
+		for (Book book: bookList) {
+			if(book.getQuantity() > 0) {
+				activeBookList.add(book);
+			}
+		}
+
+		return activeBookList;
+	}
+	
+	@Override
+	public List<Book> IsbnDescending() {
+		List<Book> bookList = bookDao.findAllByOrderByIsbnDesc();
+		List<Book> activeBookList = new ArrayList<>();
+
+		for (Book book: bookList) {
+			if(book.getQuantity() > 0) {
+				activeBookList.add(book);
+			}
+		}
+
+		return activeBookList;
+	}
+	
 	public List<Book> blurrySearch(String title) {
 		List<Book> bookList = bookDao.findByTitleContaining(title);
 		List<Book> activeBookList = new ArrayList<>();

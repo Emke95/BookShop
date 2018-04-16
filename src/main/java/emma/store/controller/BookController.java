@@ -100,6 +100,27 @@ public class BookController {
 		model.addAttribute("bookList", bookList);
 		return "books";
 	}
+	
+	@RequestMapping(value = "/isbnAsc", method = RequestMethod.GET)
+	public String listIsbnAsc(Model model,@RequestParam(value = "title", defaultValue = "") String likeName)
+	{
+
+		List<Book> bookList = bookService.IsbnAscending();
+
+		model.addAttribute("bookList", bookList);
+		return "books";
+	}
+	
+	@RequestMapping(value = "/isbnDesc", method = RequestMethod.GET)
+	public String listIsbnDesc(Model model,@RequestParam(value = "title", defaultValue = "") String likeName)
+	{
+
+		List<Book> bookList = bookService.IsbnDescending();
+
+		model.addAttribute("bookList", bookList);
+		return "books";
+	}
+	
 	@RequestMapping(value= {"/book"}, method = RequestMethod.GET)
 	public String getBooksPage(Model model) {
 		Book book = new Book();

@@ -10,6 +10,8 @@ public interface BookService {
 	List<Book> descending();
 	List<Book> authAlphabetical();
 	List<Book> authDescending();
+	List<Book> IsbnAscending();
+	List<Book> IsbnDescending();
 	List<Book> findAll();
 	List<Book> blurrySearch(String title);
 	List<Book> blurryCatSearch(String category);

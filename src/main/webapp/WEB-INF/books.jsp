@@ -19,6 +19,8 @@
 <c:url value="/titleDesc" var="DescURL" />
 <c:url value="/authAsc" var="AuAscURL" />
 <c:url value="/authDesc" var="AuDescURL" />
+<c:url value="/isbnAsc" var="IsbnAscURL"/>
+<c:url value="/isbnDesc" var ="IsbnDescURL"/>
 <div class="container">
 
 	<h1>List of books</h1>
@@ -26,9 +28,10 @@
 	<div class="row">
 		<div class="col-md-12">
 			<table class="table table-striped table-hover table-bordered">
+
 				<thead>
 					<tr>
-						<th class="text-center col-md-1">ISBN</th>
+						<th class="text-center col-md-1"><a href="${IsbnAscURL}">Asc</a>ISBN<a href="${IsbnDescURL}">Desc</a></th>
 						<th class="text-center"><a href="${AscURL}">Asc</a>Title<a
 							href="${DescURL}">Desc</a></th>
 						<th class="text-center"><a href="${AuAscURL}">Asc</a>Author<a
