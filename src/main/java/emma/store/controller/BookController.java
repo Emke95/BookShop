@@ -80,7 +80,26 @@ public class BookController {
 		model.addAttribute("bookList", bookList);
 		return "books";
 	}
+	
+	@RequestMapping(value = "/authAsc", method = RequestMethod.GET)
+	public String listAuthAsc(Model model,@RequestParam(value = "title", defaultValue = "") String likeName)
+	{
 
+		List<Book> bookList = bookService.authAlphabetical();
+
+		model.addAttribute("bookList", bookList);
+		return "books";
+	}
+
+	@RequestMapping(value = "/authDesc", method = RequestMethod.GET)
+	public String listAuthDesc(Model model,@RequestParam(value = "title", defaultValue = "") String likeName)
+	{
+
+		List<Book> bookList = bookService.authDescending();
+
+		model.addAttribute("bookList", bookList);
+		return "books";
+	}
 	@RequestMapping(value= {"/book"}, method = RequestMethod.GET)
 	public String getBooksPage(Model model) {
 		Book book = new Book();

@@ -60,6 +60,34 @@ public class BookServiceImpl implements BookService{
 		return activeBookList;
 	}
 	
+	public List<Book> authAlphabetical()
+	{
+		List<Book> bookList = bookDao.findAllByOrderByAuthorAsc();
+		List<Book> activeBookList = new ArrayList<>();
+
+		for (Book book: bookList) {
+			if(book.getQuantity() > 0) {
+				activeBookList.add(book);
+			}
+		}
+
+		return activeBookList;
+	}
+	
+	public List<Book> authDescending()
+	{
+		List<Book> bookList = bookDao.findAllByOrderByAuthorDesc();
+		List<Book> activeBookList = new ArrayList<>();
+
+		for (Book book: bookList) {
+			if(book.getQuantity() > 0) {
+				activeBookList.add(book);
+			}
+		}
+
+		return activeBookList;
+	}
+	
 	public List<Book> alphabetical()
 	{
 		List<Book> bookList = bookDao.findAllByOrderByTitleAsc();

@@ -10,14 +10,15 @@
 
 <c:url value="/cart/add" var="buyUrl" />
 <c:url value="/book/info" var="detailsUrl" />
-<c:url value="/searchByCategory?category=Fiction" var="FictionUrl"/>
-<c:url value="/searchByCategory?category=NonFiction" var="NonFictionUrl"/>
-<c:url value="/searchByCategory?category=Fantasy" var="FantasyUrl"/>
-<c:url value="/searchByCategory?category=Mystery" var="MysteryUrl"/>
-<c:url value="/searchByCategory?category=Romance" var="RomanceUrl"/>
-<c:url value="/titleAsc" var="AscURL"/>
-<c:url value="/titleDesc" var="DescURL"/>
-
+<c:url value="/searchByCategory?category=Fiction" var="FictionUrl" />
+<c:url value="/searchByCategory?category=NonFiction" var="NonFictionUrl" />
+<c:url value="/searchByCategory?category=Fantasy" var="FantasyUrl" />
+<c:url value="/searchByCategory?category=Mystery" var="MysteryUrl" />
+<c:url value="/searchByCategory?category=Romance" var="RomanceUrl" />
+<c:url value="/titleAsc" var="AscURL" />
+<c:url value="/titleDesc" var="DescURL" />
+<c:url value="/authAsc" var="AuAscURL" />
+<c:url value="/authDesc" var="AuDescURL" />
 <div class="container">
 
 	<h1>List of books</h1>
@@ -28,8 +29,10 @@
 				<thead>
 					<tr>
 						<th class="text-center col-md-1">ISBN</th>
-						<th class="text-center"><a href="${AscURL}">Asc</a>Title<a href="${DescURL}">Desc</a></th>
-						<th class="text-center">Author</th>
+						<th class="text-center"><a href="${AscURL}">Asc</a>Title<a
+							href="${DescURL}">Desc</a></th>
+						<th class="text-center"><a href="${AuAscURL}">Asc</a>Author<a
+							href="${AuDescURL}">Desc</a></th>
 						<th class="text-center">Category</th>
 						<th class="text-center">Price</th>
 						<th class="text-center">Image</th>
@@ -39,8 +42,8 @@
 							<th class="text-center col-md-1">Delete</th>
 						</security:authorize>
 						<security:authorize access="hasRole('USER')">
-							<th class="text-center col-md-1">See Details</th>
 							<th class="text-center col-md-1">Buy</th>
+							<th class="text-center col-md-1">Available</th>
 						</security:authorize>
 					</tr>
 				</thead>
@@ -56,20 +59,23 @@
 								src="${pageContext.request.contextPath}/bookCover?isbn=${book.isbn}" />
 
 								<security:authorize access="hasRole('ADMIN')">
-								<td>${book.quantity}</td>
-									<td class="text-center">
-									<a href="${pageContext.request.contextPath}/book?isbn=${book.isbn}"
-										class="btn btn-sm btn-primary"> Edit </a>
-									</td>
-									<td class="text-center">
-									<a href="${pageContext.request.contextPath}/bookDelete?isbn=${book.isbn}"
+									<td>${book.quantity}</td>
+									<td class="text-center"><a
+										href="${pageContext.request.contextPath}/book?isbn=${book.isbn}"
+										class="btn btn-sm btn-primary"> Edit </a></td>
+									<td class="text-center"><a
+										href="${pageContext.request.contextPath}/bookDelete?isbn=${book.isbn}"
 										class="btn btn-sm btn-danger delete-button">Delete</a></td>
 								</security:authorize> <security:authorize access="hasRole('USER')">
-									<td class="text-center"><a
-										href="${detailsUrl}/${book.isbn}"
-										class="btn btn-sm btn-primary">See Details</a></td>
+
 									<td class="text-center"><a href="${buyUrl}/${book.isbn}"
 										class="btn btn-sm btn-primary">Add to Cart</a></td>
+									<td class="text-center"><c:choose>
+											<c:when test="${book.quantity > 1}"> In stock.
+												</c:when>
+											<c:otherwise>
+												Unavailable</c:otherwise>
+										</c:choose></td>
 								</security:authorize>
 						</tr>
 					</c:forEach>

@@ -8,6 +8,8 @@ import emma.store.entity.Category;
 public interface BookService {
 	List<Book> alphabetical();
 	List<Book> descending();
+	List<Book> authAlphabetical();
+	List<Book> authDescending();
 	List<Book> findAll();
 	List<Book> blurrySearch(String title);
 	List<Book> blurryCatSearch(String category);
