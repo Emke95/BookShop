@@ -121,6 +121,26 @@ public class BookController {
 		return "books";
 	}
 	
+	@RequestMapping(value = "/priceAsc", method = RequestMethod.GET)
+	public String listPriceAsc(Model model,@RequestParam(value = "title", defaultValue = "") String likeName)
+	{
+
+		List<Book> bookList = bookService.PriceAscending();
+
+		model.addAttribute("bookList", bookList);
+		return "books";
+	}
+	
+	@RequestMapping(value = "/priceDesc", method = RequestMethod.GET)
+	public String listPriceDesc(Model model,@RequestParam(value = "title", defaultValue = "") String likeName)
+	{
+
+		List<Book> bookList = bookService.PriceDescending();
+
+		model.addAttribute("bookList", bookList);
+		return "books";
+	}
+	
 	@RequestMapping(value= {"/book"}, method = RequestMethod.GET)
 	public String getBooksPage(Model model) {
 		Book book = new Book();

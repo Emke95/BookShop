@@ -22,6 +22,9 @@
 <c:url value="/authDesc" var="AuDescURL" />
 <c:url value="/isbnAsc" var="IsbnAscURL" />
 <c:url value="/isbnDesc" var="IsbnDescURL" />
+<c:url value="/priceAsc" var="PriceAscURL" />
+<c:url value="/priceDesc" var="PriceDescURL" />
+
 <div class="container">
 
 	<h1>List of books</h1>
@@ -41,14 +44,14 @@
 				</thead>
 				<thead>
 					<tr>
-						<th class="text-center col-md-1"><a href="${IsbnAscURL}">Asc</a>ISBN<a
-							href="${IsbnDescURL}">Desc</a></th>
-						<th class="text-center"><a href="${AscURL}">Asc</a>Title<a
-							href="${DescURL}">Desc</a></th>
-						<th class="text-center"><a href="${AuAscURL}">Asc</a>Author<a
-							href="${AuDescURL}">Desc</a></th>
+						<th class="text-center "><a href="${IsbnAscURL}">Low</a> Isbn <a
+							href="${IsbnDescURL}">High</a></th>
+						<th class="text-center"><a href="${AscURL}">A-Z</a> Title <a
+							href="${DescURL}">Z-A</a></th>
+						<th class="text-center"><a href="${AuAscURL}">A-Z</a> Author <a
+							href="${AuDescURL}">Z-A</a></th>
 						<th class="text-center">Category</th>
-						<th class="text-center">Price</th>
+						<th class="text-center"><a href="${PriceAscURL}">Low</a> Price <a href="${PriceDescURL}">High</a></th>
 						<th class="text-center">Image</th>
 						<security:authorize access="hasRole('ADMIN')">
 							<th class="text-center col-md-1">Quantity</th>

@@ -20,6 +20,9 @@ public interface BookDao extends JpaRepository<Book, Long> {
 	List<Book>findAllByOrderByAuthorAsc();
 	List<Book>findAllByOrderByAuthorDesc();
 	
+	List<Book>findAllByOrderByPriceAsc();
+	List<Book>findAllByOrderByPriceDesc();
+	
 	List<Book> findByTitleContaining(String title);
 	List<Book> findByCategoryContaining(String category);
 	List<Book> findByCategory(Category category);
