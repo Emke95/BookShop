@@ -48,6 +48,22 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 
+	@RequestMapping(value = "/orders", method = RequestMethod.GET)
+	public String showOrders(Model model) {
+		List<Orders> orders = orderService.findAll();
+		model.addAttribute("orderList", orders);
+		return "orders";
+	}
+
+	@RequestMapping("/orders")
+	public List<Orders> viewOrders(@RequestParam("id") Long userId, Model model, Principal principal) {
+		String email = principal.getName();
+		User user = userService.findByEmail(email);
+		List<Orders> orderList = orderService.findByUser(user);
+		model.addAttribute("orderList", orderList);
+		return orderList;
+
+	}
 	@RequestMapping("/checkout")
 	public String checkout(@RequestParam("id") Long cartId,
 			@RequestParam(value = "missingRequiredField", required = false) boolean missingRequiredField, Model model,
@@ -120,13 +136,13 @@ public class OrderController {
 		return "checkout";
 
 	}
-	
+
 	@RequestMapping(value = "/checkout", method = RequestMethod.POST)
 	public String checkoutPost(@ModelAttribute("shippingAddress") ShippingAddress shippingAddress,
 			@ModelAttribute("billingAddress") BillingAddress billingAddress, @ModelAttribute("payment") Payment payment,
 			@ModelAttribute("billingSameAsShipping") String billingSameAsShipping,
 			@ModelAttribute("shippingMethod") String shippingMethod, Principal principal, Model model) {
-		
+
 		String email = principal.getName();
 		User u = userService.findByEmail(email);
 		ShoppingCart shoppingCart = u.getShoppingCart();
@@ -142,15 +158,15 @@ public class OrderController {
 				|| payment.getCardNumber().isEmpty()
 				|| payment.getCvc() == 0)
 			return "redirect:/checkout?id=" + shoppingCart.getId() + "&missingRequiredField=true";
-		
+
 		User user = userService.findByEmail(email);
-		
+
 		Orders orders = orderService.createOrders(shoppingCart, shippingAddress, payment, user);
-		
+
 		shoppingCartService.clearShoppingCart(shoppingCart);
-		
+
 		LocalDate today = LocalDate.now();
-		
+
 		return "orderSubmittedPage";
 	}
 
@@ -159,7 +175,7 @@ public class OrderController {
 			Model model) {
 		String email = principal.getName();
 		User user = userService.findByEmail(email);
-		
+
 		UserShipping userShipping = userShippingService.findById(userShippingId);
 
 		if (userShipping.getUser().getId() != user.getId()) {

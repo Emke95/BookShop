@@ -4,7 +4,7 @@
 <%@ include file="/WEB-INF/include/navbar.jsp"%>
 
 
-<c:url value="/users/orders" var="viewOrderUrl" />
+<c:url value="/orders?id=" var="viewOrderUrl" />
 
 <div class="container">
 
@@ -18,7 +18,6 @@
 						<th class="text-center">First Name</th>
 						<th class="text-center">Last Name</th>
 						<th class="text-center">Email</th>
-						<th class="text-center col-md-1">Edit</th>
 						<th class="text-center col-md-1">See Orders</th>
 					</tr>
 				</thead>
@@ -30,7 +29,7 @@
 							<td>${user.lastName}</td>
 							<td>${user.email}</td>
 
-							<td><a href="${viewOrderUrl}/${user.id}"
+							<td><a href="${viewOrderUrl}${user.id}"
 								class="btn btn-sm btn-primary">See Orders</a></td>
 						</tr>
 					</c:forEach>

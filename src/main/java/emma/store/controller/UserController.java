@@ -27,7 +27,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+import emma.store.service.UserPaymentService;
 import emma.store.service.UserService;
+import emma.store.service.UserShippingService;
+import emma.store.Strategy.Counties;
 import emma.store.entity.*;
 
 @Controller
@@ -37,6 +41,12 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserPaymentService userPaymentService;
+	
+	@Autowired
+	private UserShippingService userShippingService;
 
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public String showUsers(Model model) {
@@ -88,7 +98,10 @@ public class UserController {
 
 		model.addAttribute("listOfCreditCards", true);
 		model.addAttribute("listOfShippingAddresses", true);
-
+		
+		List<String> countyList = Counties.listOfIECountyName;
+		Collections.sort(countyList);
+		model.addAttribute("countyList", countyList);
 		model.addAttribute("classActiveEdit", true);
 
 		return "profile";
@@ -129,7 +142,9 @@ public class UserController {
 
 		model.addAttribute("userBilling", userBilling);
 		model.addAttribute("userPayment", userPayment);
-
+		List<String> countyList = Counties.listOfIECountyName;
+		Collections.sort(countyList);
+		model.addAttribute("countyList", countyList);
 		model.addAttribute("userPaymentList", user.getUserPaymentList());
 		model.addAttribute("userShippingList", user.getUserShippingList());
 		model.addAttribute("orderList", user.getOrderList());
@@ -160,6 +175,61 @@ public class UserController {
 		return "profile";
 	}
 	
+	@RequestMapping("/addNewShippingAddress")
+	public String addNewShippingAddress(
+			Model model, Principal principal
+			){
+		User user = userService.findByEmail(principal.getName());
+		model.addAttribute("user", user);
+		
+		model.addAttribute("addNewShippingAddress", true);
+		model.addAttribute("classActiveShipping", true);
+		model.addAttribute("listOfCreditCards", true);
+		
+		UserShipping userShipping = new UserShipping();
+		
+		model.addAttribute("userShipping", userShipping);
+		
+		List<String> countyList = Counties.listOfIECountyName;
+		Collections.sort(countyList);
+		model.addAttribute("countyList", countyList);
+		model.addAttribute("userPaymentList", user.getUserPaymentList());
+		model.addAttribute("userShippingList", user.getUserShippingList());
+		model.addAttribute("orderList", user.getOrderList());
+		
+		return "myProfile";
+	}
+	
+	@RequestMapping("/updateUserShipping")
+	public String updateUserShipping(
+			@ModelAttribute("id") Long shippingAddressId, Principal principal, Model model
+			) {
+		User user = userService.findByEmail(principal.getName());
+		UserShipping userShipping = userShippingService.findById(shippingAddressId);
+		
+		if(user.getId() != userShipping.getUser().getId()) {
+			return "badRequestPage";
+		} else {
+			model.addAttribute("user", user);
+			
+			model.addAttribute("userShipping", userShipping);
+			
+			List<String> countyList = Counties.listOfIECountyName;
+			Collections.sort(countyList);
+			model.addAttribute("countyList", countyList);
+			
+			model.addAttribute("addNewShippingAddress", true);
+			model.addAttribute("classActiveShipping", true);
+			model.addAttribute("listOfCreditCards", true);
+			
+			model.addAttribute("userPaymentList", user.getUserPaymentList());
+			model.addAttribute("userShippingList", user.getUserShippingList());
+			model.addAttribute("orderList", user.getOrderList());
+			
+			return "myProfile";
+		}
+	}
+	
 	@RequestMapping(value="/addNewShippingAddress", method=RequestMethod.POST)
 	public String addNewShippingAddressPost(
 			@ModelAttribute("userShipping") UserShipping userShipping,
@@ -181,5 +251,35 @@ public class UserController {
 		return "profile";
 	}
 	
+	@RequestMapping("/updateCreditCard")
+	public String updateCreditCard(
+			@ModelAttribute("id") Long creditCardId, Principal principal, Model model
+			) {
+		User user = userService.findByEmail(principal.getName());
+		UserPayment userPayment = userPaymentService.findById(creditCardId);
+		
+		if(user.getId() != userPayment.getUser().getId()) {
+			return "badRequestPage";
+		} else {
+			model.addAttribute("user", user);
+			UserBilling userBilling = userPayment.getUserBilling();
+			model.addAttribute("userPayment", userPayment);
+			model.addAttribute("userBilling", userBilling);
+			
+			List<String> countyList = Counties.listOfIECountyName;
+			Collections.sort(countyList);
+			model.addAttribute("countyList", countyList);
+		
+			model.addAttribute("addNewCreditCard", true);
+			model.addAttribute("classActiveBilling", true);
+			model.addAttribute("listOfShippingAddresses", true);
+			
+			model.addAttribute("userPaymentList", user.getUserPaymentList());
+			model.addAttribute("userShippingList", user.getUserShippingList());
+			model.addAttribute("orderList", user.getOrderList());
+			
+			return "profile";
+		}
+	}
 
 }

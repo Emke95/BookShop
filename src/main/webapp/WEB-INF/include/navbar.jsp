@@ -85,8 +85,10 @@
 					aria-expanded="false"> <sec:authentication
 							property="principal.username" /> <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="${profileUrl}">My Profile</a></li>
+					<sec:authorize access="hasRole('USER')">
+						<li><a href="${profileUrl}">My Profile</a></li>					
 						<li role="separator" class="divider"></li>
+						</sec:authorize>
 						<li><a href="${logoutURL}">Logout</a></li>
 					</ul></li>
 			</ul>
