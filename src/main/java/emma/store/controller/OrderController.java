@@ -1,6 +1,7 @@
 package emma.store.controller;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import emma.store.Strategy.Card;
+import emma.store.Strategy.Counties;
+import emma.store.Strategy.PaymentMethod;
+import emma.store.Strategy.PaymentMethodFactory;
 import emma.store.entity.*;
 import emma.store.service.*;
 
@@ -66,6 +71,16 @@ public class OrderController {
 		return "orders";
 	}
 
+	@RequestMapping("/addPaymentMethod")
+	public String addPaymentMethod(Model model, Principal principal)
+	{
+		List<String> paymentList = PaymentMethodFactory.listOfPaymentMethods;
+		Collections.sort(paymentList);
+		model.addAttribute("paymentList", paymentList);
+		model.addAttribute("classActiveEdit", true);
+
+		return "redirect:/main";
+	}
 	
 	@RequestMapping("/checkout")
 	public String checkout(@RequestParam("id") Long cartId,

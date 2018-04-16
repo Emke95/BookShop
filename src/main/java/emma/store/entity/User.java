@@ -19,6 +19,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Email;
 
+import emma.store.Strategy.PaymentMethod;
+
 
 @Entity
 @Table(name = "User")
@@ -75,6 +77,7 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private List<UserPayment> userPaymentList;
 	
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
 	private List<OrderDemo> orderDemos;
 	

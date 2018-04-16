@@ -79,7 +79,7 @@
 							<td>${book.title}</td>
 							<td>${book.author}</td>
 							<td>${book.category}</td>
-							<td>${book.price}</td>
+							<td>$${book.price}</td>
 							<td><img class="book-image"
 								src="${pageContext.request.contextPath}/bookCover?isbn=${book.isbn}" />
 
