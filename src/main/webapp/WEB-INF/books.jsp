@@ -15,11 +15,12 @@
 <c:url value="/searchByCategory?category=Fantasy" var="FantasyUrl"/>
 <c:url value="/searchByCategory?category=Mystery" var="MysteryUrl"/>
 <c:url value="/searchByCategory?category=Romance" var="RomanceUrl"/>
+<c:url value="/titleAsc" var="AscURL"/>
+<c:url value="/titleDesc" var="DescURL"/>
 
 <div class="container">
 
 	<h1>List of books</h1>
-
 
 	<div class="row">
 		<div class="col-md-12">
@@ -27,7 +28,7 @@
 				<thead>
 					<tr>
 						<th class="text-center col-md-1">ISBN</th>
-						<th class="text-center">Title</th>
+						<th class="text-center"><a href="${AscURL}">Asc</a>Title<a href="${DescURL}">Desc</a></th>
 						<th class="text-center">Author</th>
 						<th class="text-center">Category</th>
 						<th class="text-center">Price</th>

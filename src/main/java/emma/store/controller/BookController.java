@@ -60,6 +60,26 @@ public class BookController {
 		model.addAttribute("bookList", bookList);
 		return "books";
 	}
+	
+	@RequestMapping(value = "/titleAsc", method = RequestMethod.GET)
+	public String listBooksAsc(Model model,@RequestParam(value = "title", defaultValue = "") String likeName)
+	{
+
+		List<Book> bookList = bookService.alphabetical();
+
+		model.addAttribute("bookList", bookList);
+		return "books";
+	}
+	
+	@RequestMapping(value = "/titleDesc", method = RequestMethod.GET)
+	public String listBooksDesc(Model model,@RequestParam(value = "title", defaultValue = "") String likeName)
+	{
+
+		List<Book> bookList = bookService.descending();
+
+		model.addAttribute("bookList", bookList);
+		return "books";
+	}
 
 	@RequestMapping(value= {"/book"}, method = RequestMethod.GET)
 	public String getBooksPage(Model model) {

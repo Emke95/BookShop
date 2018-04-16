@@ -11,6 +11,9 @@ import emma.store.entity.Category;
 @Repository
 public interface BookDao extends JpaRepository<Book, Long> {
 
+	List<Book>findAllByOrderByTitleAsc();
+	List<Book>findAllByOrderByTitleDesc();
+	
 	List<Book> findByTitleContaining(String title);
 	List<Book> findByCategoryContaining(String category);
 	List<Book> findByCategory(Category category);

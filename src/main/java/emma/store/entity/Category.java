@@ -2,7 +2,7 @@ package emma.store.entity;
 
 public enum Category {
 
-	Fiction("Ficton"), Romance ("Romance"), Fantasy("Fantasy"), Mystery ("Mystery"), NonFiction("NonFiction");
+	Fiction("Ficton"), Romance ("Romance"), Fantasy("Fantasy"),Spiritual("Spiritual"), Mystery ("Mystery"), NonFiction("NonFiction");
 
 	String categoryName;
 
