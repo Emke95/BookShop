@@ -30,12 +30,13 @@ public class OrderDemo {
 	@Column(name = "OrderDemoDate", nullable = false)
 	private Date orderDate;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "UserId")
 	private User user;
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "orderDemos")
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "orderDemos")
 	private List<OrderDetails> orderDetails;
+	
 
 	public OrderDemo(){
 

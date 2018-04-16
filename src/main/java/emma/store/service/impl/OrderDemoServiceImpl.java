@@ -63,8 +63,18 @@ public class OrderDemoServiceImpl implements OrderDemoService {
 	}
 
 	
-	public List<OrderDemo> findAllOrderDemos() {
+	public List<OrderDemo> findAll() {
 		return orderDemoDao.findAll();
+	}
+
+	@Override
+	public List<OrderDemo> findByUser(User user) {
+		return orderDemoDao.findByUser(user);
+	}
+
+	@Override
+	public List<OrderDemo> findByUserId(Long id) {
+		return orderDemoDao.findByUserId(id);
 	}
 
 }

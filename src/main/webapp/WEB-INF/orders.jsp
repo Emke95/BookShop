@@ -12,16 +12,25 @@
 			<table class="table table-striped table-hover table-bordered">
 				<thead>
 					<tr>
+						<th class="text-center col-md-1">Order No.</th>
 						<th class="text-center">Date</th>
-						<th class="text-center">User Id</th>
+						<th class="text-center">Name</th>
+						<th class="text-center">Email</th>
+						<th class="text-center">Address</th>
+						<th class="text-center">Card Number</th>
 					</tr>
 				</thead>
 				<tbody>
 
-					<c:forEach items="${ordersList}" var="order">
+					<c:forEach items="${orderDemoList}" var="orderDemo">
 						<tr>
-							<td>${order.getOrderId()}</td>
-							<td>${order.user.getFirstName()}</td>
+							<td>${orderDemo.getId()}</td>
+							<td>${orderDemo.getOrderDate()}</td>
+							<td>${orderDemo.getUser().getFirstName()}
+								${orderDemo.getUser().getLastName()}</td>
+							<td>${orderDemo.getUser().getEmail()}</td>
+							<td>${orderDemo.getUser().getAddress()}</td>
+							<td>${orderDemo.getUser().getCardNumber()}</td>
 						</tr>
 					</c:forEach>
 

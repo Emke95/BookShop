@@ -2,6 +2,7 @@ package emma.store.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 
 @Entity
 @Table(name = "orderdetails")
@@ -26,7 +30,11 @@ public class OrderDetails {
 
 	@Column(name = "OrderDetailsQuantity", nullable = false)
 	private int quantity;
-
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "orderId")
+	private Orders orders;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "orderDemoId")
 	private OrderDemo orderDemos;
@@ -79,8 +87,6 @@ public class OrderDetails {
 		this.quantity = quantity;
 		this.book = book;
 	}
-
-
 
 	public OrderDemo getOrderDemos() {
 		return orderDemos;

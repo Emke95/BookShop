@@ -17,5 +17,10 @@ public interface OrderDemoService {
 
 	OrderDemo findOrderDemoById(Long id);
 	
-	List<OrderDemo> findAllOrderDemos();
+	List<OrderDemo> findAll();
+
+	List<OrderDemo> findByUser(User user);
+	
+	List<OrderDemo> findByUserId(Long id);
+
 }

@@ -60,21 +60,13 @@ public class OrderController {
 	private Cart cart;
 
 	@RequestMapping(value = "/orders", method = RequestMethod.GET)
-	public String showOrders(Model model) {
-		List<Orders> orders = orderService.findAll();
-		model.addAttribute("orderList", orders);
+	public String showOrderDemos(Model model) {
+		List<OrderDemo> orderDemos = orderDemoService.findAll();
+		model.addAttribute("orderDemoList", orderDemos);
 		return "orders";
 	}
 
-	@RequestMapping("/orders")
-	public List<Orders> viewOrders(@RequestParam("id") Long userId, Model model, Principal principal) {
-		String email = principal.getName();
-		User user = userService.findByEmail(email);
-		List<Orders> orderList = orderService.findByUser(user);
-		model.addAttribute("orderList", orderList);
-		return orderList;
-
-	}
+	
 	@RequestMapping("/checkout")
 	public String checkout(@RequestParam("id") Long cartId,
 			@RequestParam(value = "missingRequiredField", required = false) boolean missingRequiredField, Model model,
