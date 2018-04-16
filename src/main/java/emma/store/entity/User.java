@@ -19,6 +19,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Email;
 
+
 @Entity
 @Table(name = "User")
 public class User {
@@ -65,6 +66,8 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private List<UserPayment> userPaymentList;
 	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	private List<OrderDemo> orderDemos;
 	
 		public String getFirstName() {
 		return firstName;
@@ -187,6 +190,16 @@ public class User {
 
 	public String toString() {
 		return firstName + lastName + email + password + active + role /*+ shippingAddress*/;
+	}
+
+
+	public List<OrderDemo> getOrderDemos() {
+		return orderDemos;
+	}
+
+
+	public void setOrderDemos(List<OrderDemo> orderDemos) {
+		this.orderDemos = orderDemos;
 	}
 
 }

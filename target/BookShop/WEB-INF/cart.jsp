@@ -14,7 +14,7 @@
 <body>
 	<div class="container">
 		<h2>Your cart</h2>
-		<form action='cart/confirmOrder' method="post">
+		<form action="${pageContext.request.contextPath}/confirmOrder" method="post">
 			<table class="table table-striped table-hover table-bordered">
 				<thead>
 					<tr>
@@ -46,8 +46,10 @@
 					</tr>
 				</tbody>
 			</table>
-			<a class="btn btn-primary"
-			href="${pageContext.request.contextPath}/checkout?id=${shoppingCart.id}">Check Out</a>
+
+			<input type="submit" value="Confirm Order"></input>
+			<!--  <a class="btn btn-primary"
+			href="${pageContext.request.contextPath}/checkout?id=${shoppingCart.id}">Check Out</a>-->
 		</form>
 
 	</div>

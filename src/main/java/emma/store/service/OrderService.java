@@ -10,8 +10,9 @@ public interface OrderService {
 			ShippingAddress shippingAddress,
 			Payment payment,
 			User user);
-
+	
 	Orders findOne(Long id);
 	List<Orders> findByUser(User user);
 	List<Orders> findAll();
+
 }

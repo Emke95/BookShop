@@ -10,7 +10,8 @@
 <c:url value="/book/delete" var="deleteBookUrl" />
 <c:url value="/addNewCreditCard" var="addCredCardUrl" />
 <c:url value="/addNewShippingAddress" var="addAddressUrl" />
-<c:url value="/setDefaultShippingAddress" var="setDefaultShippingAddressUrl"/>
+<c:url value="/setDefaultShippingAddress"
+	var="setDefaultShippingAddressUrl" />
 
 <c:url value="/addItem" var="buyUrl" />
 <c:url value="/book/info" var="detailsUrl" />
@@ -128,19 +129,8 @@
 
 			<!-- Shipping Information -->
 			<form action="${addAddressUrl}" method="post">
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item active"><a
-						th:href="@{/listOfShippingAddresses}"
-						th:style="${listOfShippingAddresses}? 'color:red'">List of
-							Shipping Addresses</a></li>
-					<li class="breadcrumb-item active"><a
-						th:href="@{/addNewShippingAddress}"
-						th:style="${addNewShippingAddress}? 'color:red'">Add(Update)
-							Shipping Address</a></li>
-				</ol>
-
 				<div th:if="${listOfShippingAddresses}">
-					<form  action="${setDefaultShippingAddressUrl}" method="post">
+					<form action="${setDefaultShippingAddressUrl}" method="post">
 						<table class="table">
 							<thead>
 								<tr>
@@ -155,8 +145,9 @@
 										th:value="${userShipping.id}"
 										th:checked="${userShipping.userShippingDefault}" /><span>default</span></td>
 									<td
-										th:text="${userShipping.userShippingStreet1}+', '+
-														${userShipping.userShippingCity}+', '+${userShipping.userShippingState}"></td>
+										th:text="${userShipping.uStreet}+', '+
+														${userShipping.uArea}+', '+${userShipping.aCounty}+
+														${userShipping.aCountry}"></td>
 									<td><a
 										th:href="@{/updateUserShipping(id=${userShipping.id})}"><i
 											class="fa fa-pencil"></i></a>&nbsp;&nbsp;<a
@@ -169,64 +160,63 @@
 					</form>
 				</div>
 
-					<div class="bg-info" th:if="${updateUserShippingInfo}">User
-							info updated.</div>
+				<div class="bg-info" th:if="${updateUserShippingInfo}">User
+					info updated.</div>
 
-						<input hidden="hidden" name="id" th:value="${userShipping.id}" />
+				<input hidden="hidden" name="id" th:value="${userShipping.id}" />
 
-						<!-- Shipping Address -->
-						<hr />
-						<div class="form-group">
-							<h4>Shipping Address</h4>
-						</div>
-						<div class="form-group">
-							<label for="shippingName">* House Num</label> <input type="text"
-								class="form-control" id="HouseNo" placeholder="HouseNumber"
-								name="HouseNo" th:value="${shippingAddress.houseNo}" />
-						</div>
-
-						<div class="form-group">
-							<label for="Street">* Street Address</label> <input type="text"
-								class="form-control" id="Street" placeholder="Street Address"
-								name="Street" th:value="${shippingAddress.street}" />
-						</div>
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Area name="
-								Area"
-											th:value="${shippingAddress.area}" />
-						</div>
-
-						<div class="row">
-							<div class="col-xs-4">
-								<div class="form-group">
-									<label for="country">* country</label> <input type="text"
-										class="form-control" id=country placeholder="Shipping country"
-										th:name="country" required="required"
-										th:value="${shippingAddress.country}" />
-								</div>
-							</div>
-							<div class="col-xs-4">
-								<div class="form-group">
-									<label for="shippingState">* County</label> <select
-										id="shippingState" class="form-control"
-										th:name="shippingAddressState"
-										th:value="${shippingAddress.county}" required="required">
-										<option value="" disabled="disabled">Please select an
-											option</option>
-										<option th:each="state : ${countyList}" th:text="${county}"
-											th:selected="(${shippingAddress.county}==${county})"></option>
-									</select>
-								</div>
-							</div>
-						</div>
+				<!-- Shipping Address -->
+				<hr />
+				<div class="form-group">
+					<h4>Shipping Address</h4>
 				</div>
-			</form>
-			</form>
-			<hr />
-			<button type="submit" class="btn btn-primary btn-lg">Save
-				All</button>
+				<div class="form-group">
+					<label for="shippingName">* House Num</label> <input type="text"
+						class="form-control" id="HouseNo" placeholder="HouseNumber"
+						name="HouseNo" th:value="${shippingAddress.houseNo}" />
+				</div>
+
+				<div class="form-group">
+					<label for="Street">* Street Address</label> <input type="text"
+						class="form-control" id="Street" placeholder="Street Address"
+						name="Street" th:value="${shippingAddress.street}" />
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Area name="
+						Area"
+											th:value="${shippingAddress.area}" />
+				</div>
+
+				<div class="row">
+					<div class="col-xs-4">
+						<div class="form-group">
+							<label for="country">* country</label> <input type="text"
+								class="form-control" id=country placeholder="Shipping country"
+								th:name="country" required="required"
+								th:value="${shippingAddress.country}" />
+						</div>
+					</div>
+					<div class="col-xs-4">
+						<div class="form-group">
+							<label for="shippingState">* County</label> <select
+								id="shippingState" class="form-control"
+								th:name="shippingAddressState"
+								th:value="${shippingAddress.county}" required="required">
+								<option value="" disabled="disabled">Please select an
+									option</option>
+								<option th:each="state : ${countyList}" th:text="${county}"
+									th:selected="(${shippingAddress.county}==${county})"></option>
+							</select>
+						</div>
+					</div>
+				</div>
 		</div>
+		</form>
+		</form>
+		<hr />
+		<button type="submit" class="btn btn-primary btn-lg">Save All</button>
 	</div>
+</div>
 </div>
 
 

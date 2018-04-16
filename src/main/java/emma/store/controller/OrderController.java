@@ -161,7 +161,7 @@ public class OrderController {
 
 		User user = userService.findByEmail(email);
 
-		Orders orders = orderService.createOrders(shoppingCart, shippingAddress, payment, user);
+		//Orders orders = orderService.createOrders(shoppingCart, shippingAddress, payment, user);
 
 		shoppingCartService.clearShoppingCart(shoppingCart);
 

@@ -5,6 +5,8 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ include file="/WEB-INF/include/header.jsp"%>
 <%@ include file="/WEB-INF/include/navbar.jsp"%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,29 +14,26 @@
 <title>Cart</title>
 </head>
 <body>
+<c:url value="/confirmOrder" var="confirmUrl" />
 	<div class="container">
 		<h2>Your cart</h2>
-		<form action='cart/confirmOrder' method="post">
+		<form action="${confirmUrl}" method="post">
+		${cartMessage}
 			<table class="table table-striped table-hover table-bordered">
 				<thead>
 					<tr>
 						<th class="text-center">Book</th>
 						<th class="text-center">Quantity</th>
 						<th class="text-center">Price</th>
-						<th class="text-center">Remove</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="cartItem" items="${cartItemList}">
+					<c:forEach var="book" items="${cart.contents}">
 						<tr>
-							<td><c:out value="${cartItem.book.title}" /></td>
-							<td><c:out value="${cartItem.qty}" /></td>
-							<td>$<c:out value="${cartItem.book.price}" />
-							<td class="text-center"><a
-								href="${pageContext.request.contextPath}/removeItem?id=${cartItem.id}"
-								class="btn btn-sm btn-danger delete-button">Delete</a></td>
-
-
+							<td><c:out value="${book.key.title}" /></td>
+							<td><c:out value="${book.value}" /></td>
+							<td>$<c:out value="${book.key.price}" />
+							</td>
 						</tr>
 					</c:forEach>
 
@@ -42,12 +41,11 @@
 					<tr>
 						<td>Total</td>
 						<td></td>
-						<td>$${shoppingCart.grandTotal}</td>
+						<td>$${cart.totalCost}</td>
 					</tr>
 				</tbody>
 			</table>
-			<a class="btn btn-primary"
-			href="${pageContext.request.contextPath}/checkout?id=${shoppingCart.id}">Check Out</a>
+			<input type="submit" value="Confirm Order"></input>
 		</form>
 
 	</div>

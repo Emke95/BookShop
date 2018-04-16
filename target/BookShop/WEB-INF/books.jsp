@@ -8,8 +8,7 @@
 
 <c:url value="/book/edit" var="editBookUrl" />
 <c:url value="/book/delete" var="deleteBookUrl" />
-
-<c:url value="/addItem?id=" var="buyUrl" />
+<c:url value="/cart/add" var="buyUrl" />
 <c:url value="/bookDetail?id=" var="detailsUrl" />
 
 <html lang="en" xmlns:th="http://www.w3.org/1000/xhtml">

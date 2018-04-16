@@ -36,22 +36,22 @@ public class ShoppingController {
 	@Autowired
 	private ShoppingCartService shoppingCartService;
 
-	@RequestMapping("/cart")
-	public String shoppingCart(Model model, Principal principal) {
-
-		String email = principal.getName();
-		User user = userService.findByEmail(email);
-		ShoppingCart shoppingCart = user.getShoppingCart();
-
-		List<CartItem> cartItemList = cartItemService.findByShoppingCart(shoppingCart);
-
-		shoppingCartService.updateShoppingCart(shoppingCart);
-
-		model.addAttribute("cartItemList", cartItemList);
-		model.addAttribute("shoppingCart", shoppingCart);
-
-		return "cart";
-	}
+//	@RequestMapping("/cart")
+//	public String shoppingCart(Model model, Principal principal) {
+//
+//		String email = principal.getName();
+//		User user = userService.findByEmail(email);
+//		ShoppingCart shoppingCart = user.getShoppingCart();
+//
+//		List<CartItem> cartItemList = cartItemService.findByShoppingCart(shoppingCart);
+//
+//		shoppingCartService.updateShoppingCart(shoppingCart);
+//
+//		model.addAttribute("cartItemList", cartItemList);
+//		model.addAttribute("shoppingCart", shoppingCart);
+//
+//		return "cart";
+//	}
 
 	@RequestMapping("/addItem")
 	public String addItem(
