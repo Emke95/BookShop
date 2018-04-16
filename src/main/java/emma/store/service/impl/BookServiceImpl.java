@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import emma.store.dao.BookDao;
 import emma.store.entity.Book;
+import emma.store.entity.Category;
 import emma.store.service.BookService;
 
 @Service
@@ -57,6 +58,19 @@ public class BookServiceImpl implements BookService{
 
 		return activeBookList;
 	}
+	
+	public List<Book> blurryCatSearch(String category) {
+		List<Book> bookList = bookDao.findByCategoryContaining(category);
+		List<Book> activeBookList = new ArrayList<>();
+
+		for (Book book: bookList) {
+			if(book.getQuantity() > 0) {
+				activeBookList.add(book);
+			}
+		}
+
+		return activeBookList;
+	}
 
 	@Override
 	public Book findByIsbn(String isbn) {
@@ -68,7 +82,7 @@ public class BookServiceImpl implements BookService{
 		bookDao.delete(book);	}
 
 	@Override
-	public List<Book> findByCategory(String category) {
+	public List<Book> findByCategory(Category category) {
 		List<Book> bookList = bookDao.findByCategory(category);
 
 		List<Book> activeBookList = new ArrayList<>();

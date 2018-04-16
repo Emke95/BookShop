@@ -1,39 +1,22 @@
 package emma.store.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import emma.store.service.BookService;
-import emma.store.service.CartItemService;
 import emma.store.service.OrderDemoService;
-import emma.store.service.OrderService;
-import emma.store.service.ShoppingCartService;
 import emma.store.service.UserService;
-import emma.store.entity.User;
 import emma.store.entity.Cart;
 import emma.store.entity.Book;
-import emma.store.entity.CartItem;
-import emma.store.entity.ShoppingCart;
 
 @Controller
 public class AppController {

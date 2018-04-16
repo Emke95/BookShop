@@ -10,7 +10,11 @@
 
 <c:url value="/cart/add" var="buyUrl" />
 <c:url value="/book/info" var="detailsUrl" />
-
+<c:url value="/searchByCategory?category=Fiction" var="FictionUrl"/>
+<c:url value="/searchByCategory?category=NonFiction" var="NonFictionUrl"/>
+<c:url value="/searchByCategory?category=Fantasy" var="FantasyUrl"/>
+<c:url value="/searchByCategory?category=Mystery" var="MysteryUrl"/>
+<c:url value="/searchByCategory?category=Romance" var="RomanceUrl"/>
 
 <div class="container">
 

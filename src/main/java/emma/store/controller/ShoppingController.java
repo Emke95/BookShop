@@ -1,7 +1,6 @@
 package emma.store.controller;
 
 import java.security.Principal;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import emma.store.entity.CartItem;
-import emma.store.entity.ShoppingCart;
 import emma.store.entity.User;
 import emma.store.entity.Book;
 import emma.store.service.BookService;

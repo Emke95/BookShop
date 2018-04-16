@@ -47,6 +47,15 @@ public class User {
 
 	@Column(name="Password", nullable=false)
 	private String password;
+	
+	@Column(name="Address", nullable=false)
+	private String address;
+	
+	@Column(name="cardNumber", nullable=false)
+	private Long cardNumber;
+	
+	@Column(name="cardCVC", nullable=false)
+	private int cardCVC;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "role", nullable = false)
@@ -91,6 +100,36 @@ public class User {
 
 	public void setUserShippingList(List<UserShipping> userShippingList) {
 		this.userShippingList = userShippingList;
+	}
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
+	public Long getCardNumber() {
+		return cardNumber;
+	}
+
+
+	public void setCardNumber(Long cardNumber) {
+		this.cardNumber = cardNumber;
+	}
+
+
+	public int getCardCVC() {
+		return cardCVC;
+	}
+
+
+	public void setCardCVC(int cardCVC) {
+		this.cardCVC = cardCVC;
 	}
 
 

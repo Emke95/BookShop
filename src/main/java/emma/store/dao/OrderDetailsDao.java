@@ -11,8 +11,4 @@ public interface OrderDetailsDao extends JpaRepository<OrderDetails, Integer>{
 	OrderDetails findOrderDetailsByBook(Book book);
 
 	OrderDetails findOrderDetailsByOrders(Long id);
-
-	//OrderDetails findOrderDetailsById(Long id);
-
-	//OrderDetails findOne(Long id);
 }

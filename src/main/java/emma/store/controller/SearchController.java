@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import emma.store.entity.Book;
+import emma.store.entity.Category;
 import emma.store.entity.User;
 import emma.store.service.BookService;
 import emma.store.service.UserService;
@@ -25,7 +26,7 @@ public class SearchController {
 
 	@RequestMapping("/searchByCategory")
 	public String searchByCategory(
-			@RequestParam("category") String category,
+			@RequestParam("category") Category category,
 			Model model, Principal principal
 			){
 		if(principal!=null) {

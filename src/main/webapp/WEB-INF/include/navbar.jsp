@@ -59,7 +59,7 @@
 
 				</sec:authorize>
 			</ul>
-			<ul class="nav navbar-nav navbar-center">
+			<ul class="nav navbar-nav navbar-center">s
 				<li>
 					<form class="navbar-form" action="${searchURL}" method="post">
 						<div class="form-group">
