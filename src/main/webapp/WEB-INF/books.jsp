@@ -7,15 +7,15 @@
 
 <c:url value="/book/edit" var="editBookUrl" />
 <c:url value="/book/delete" var="deleteBookUrl" />
-<c:url value="/books" var="booksURL"/>
+<c:url value="/books" var="booksURL" />
 <c:url value="/cart/add" var="buyUrl" />
-<c:url value="/book/info" var="detailsUrl" />
+<c:url value="/books" var="detailsUrl" />
 <c:url value="/searchByCategory?category=Fiction" var="FictionUrl" />
 <c:url value="/searchByCategory?category=NonFiction" var="NonFictionUrl" />
 <c:url value="/searchByCategory?category=Fantasy" var="FantasyUrl" />
 <c:url value="/searchByCategory?category=Mystery" var="MysteryUrl" />
 <c:url value="/searchByCategory?category=Romance" var="RomanceUrl" />
-<c:url value="/searchByCategory?category=Spiritual" var="SpiritualUrl"/>
+<c:url value="/searchByCategory?category=Spiritual" var="SpiritualUrl" />
 <c:url value="/titleAsc" var="AscURL" />
 <c:url value="/titleDesc" var="DescURL" />
 <c:url value="/authAsc" var="AuAscURL" />
@@ -33,25 +33,32 @@
 		<div class="col-md-12">
 			<table class="table table-striped table-hover table-bordered">
 				<thead>
-				<tr>
-				<th class="text-center"><a href="${FictionUrl}">Fiction Books</a></th>
-				<th class="text-center"><a href="${NonFictionUrl}">Non Fiction Books</a></th>
-				<th class="text-center"><a href="${MysteryUrl}">Mystery Books</a></th>
-				<th class="text-center"><a href="${RomanceUrl}">Romance Books</a></th>
-				<th class="text-center"><a href="${FantasyUrl}">Fantasy Books</a></th>
-				<th class="text-center"><a href="${SpiritualUrl}">Spiritual Books</a></th>
-				</tr>
+					<tr>
+						<th class="text-center"><a href="${FictionUrl}">Fiction
+								Books</a></th>
+						<th class="text-center"><a href="${NonFictionUrl}">Non
+								Fiction Books</a></th>
+						<th class="text-center"><a href="${MysteryUrl}">Mystery
+								Books</a></th>
+						<th class="text-center"><a href="${RomanceUrl}">Romance
+								Books</a></th>
+						<th class="text-center"><a href="${FantasyUrl}">Fantasy
+								Books</a></th>
+						<th class="text-center"><a href="${SpiritualUrl}">Spiritual
+								Books</a></th>
+					</tr>
 				</thead>
 				<thead>
 					<tr>
-						<th class="text-center "><a href="${IsbnAscURL}">Low</a> Isbn <a
-							href="${IsbnDescURL}">High</a></th>
+						<th class="text-center "><a href="${IsbnAscURL}">Low</a> Isbn
+							<a href="${IsbnDescURL}">High</a></th>
 						<th class="text-center"><a href="${AscURL}">A-Z</a> Title <a
 							href="${DescURL}">Z-A</a></th>
-						<th class="text-center"><a href="${AuAscURL}">A-Z</a> Author <a
-							href="${AuDescURL}">Z-A</a></th>
+						<th class="text-center"><a href="${AuAscURL}">A-Z</a> Author
+							<a href="${AuDescURL}">Z-A</a></th>
 						<th class="text-center">Category</th>
-						<th class="text-center"><a href="${PriceAscURL}">Low</a> Price <a href="${PriceDescURL}">High</a></th>
+						<th class="text-center"><a href="${PriceAscURL}">Low</a>
+							Price <a href="${PriceDescURL}">High</a></th>
 						<th class="text-center">Image</th>
 						<security:authorize access="hasRole('ADMIN')">
 							<th class="text-center col-md-1">Quantity</th>
@@ -59,6 +66,7 @@
 							<th class="text-center col-md-1">Delete</th>
 						</security:authorize>
 						<security:authorize access="hasRole('USER')">
+							<th class="text-center col-md-1">Details</th>
 							<th class="text-center col-md-1">Buy</th>
 							<th class="text-center col-md-1">Available</th>
 						</security:authorize>
@@ -84,10 +92,13 @@
 										href="${pageContext.request.contextPath}/bookDelete?isbn=${book.isbn}"
 										class="btn btn-sm btn-danger delete-button">Delete</a></td>
 								</security:authorize> <security:authorize access="hasRole('USER')">
-
-									<td class="text-center"><a href="${buyUrl}/${book.isbn}"
+									<td class="text-center">
+									<a href="${detailsUrl}/${book.id}"
+										class="btn btn-sm btn-primary">See details</a></td>
+									</td>
+										<td class="text-center"><a href="${buyUrl}/${book.isbn}"
 										class="btn btn-sm btn-primary">Add to Cart</a></td>
-									<td class="text-center"><c:choose>
+										<td class="text-center"><c:choose>
 											<c:when test="${book.quantity > 1}"> In stock.
 												</c:when>
 											<c:otherwise>
@@ -97,7 +108,7 @@
 						</tr>
 					</c:forEach>
 				</tbody>
-				
+
 			</table>
 			<a href="${booksURL}">All Books</a>
 		</div>

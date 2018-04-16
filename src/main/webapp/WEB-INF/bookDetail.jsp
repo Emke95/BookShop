@@ -1,72 +1,49 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="security"%>
 <%@ include file="/WEB-INF/include/header.jsp"%>
+<%@ include file="/WEB-INF/include/footer.jsp"%>
 <%@ include file="/WEB-INF/include/navbar.jsp"%>
+<c:url value="/cart/add" var="buyUrl" />
+<div class="container">
 
-<c:url var="buyUrl" value="/addItem" />
+	<table class="bookshow">
+		<tr>
+			<td>Title:</td>
+			<td>${book.title}</td>
+			<td rowspan="9" class="imagecolumn"><a
+				href="<c:url value="/books/book/${book.id}"/>"><img
+					src="${pageContext.request.contextPath}/bookCover?isbn=${book.isbn}"
+					width="270" height="425"></a></td>
+		</tr>
+		<tr>
+			<td>Author:</td>
+			<td>${book.author}</td>
+		</tr>
+		<tr>
+			<td>Isbn:</td>
+			<td>${book.isbn}</td>
+		</tr>
+		<tr>
+			<td>Price:</td>
+			<td>$${book.price}</td>
+		</tr>
+		
+	</table>
+	<table>
+	<security:authorize access="hasRole('USER')">
+
+			<td class="text-center"><a href="${buyUrl}/${book.isbn}"
+				class="btn btn-sm btn-primary">Add to Cart</a></td>
+			<td class="text-center"><c:choose>
+					<c:when test="${book.quantity > 1}"> In stock.
+												</c:when>
+					<c:otherwise>
+												Unavailable</c:otherwise>
+				</c:choose></td>
+		</security:authorize>
+		</table>
+</div>
 
 
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Book Information</title>
-</head>
-<body>
-	<div class="container">
-		<form:form action="${buyUrl}" method="post">
-		<input hidden="hidden" field="*{book.id}" />
-				<h3 text="${book.title}">Book Title</h3>
-				<div class="row">
-					<div class="col-xs-5">
-						<h5>
-							<strong>Author: </strong><span th:text="${book.author}"></span>
-						</h5>
-
-						<p>
-							<strong>Category: </strong><span th:text="${book.category}"></span>
-						</p>
-						<p>
-							<strong>ISBN: </strong><span th:text="${book.isbn}"></span>
-						</p>
-
-					</div>
-
-					<div class="col-xs-7">
-						<div class="panel panel-default"
-							style="border-width: 5px; margin-top: 20px;">
-							<div class="panel-body">
-								<div class="row">
-									<div class="col-xs-6">
-										<h4>
-											Our Price: <span style="color: #db3208;">$<span
-												th:text="${book.price}"></span></span>
-										</h4>
-										<span>Qty: </span> <select name="qty">
-											<option th:each="qty : ${qtyList}" th:value="${qty}"
-												th:text="${qty}"></option>
-										</select>
-									</div>
-									<div class="col-xs-6">
-										<h4 th:if="*{book.quantity&gt;10}" style="color: green">In
-											Stock</h4>
-										<h4
-											th:if="*{book.quantity&lt;10 and book.quantity&gt;0}"
-											style="color: green">
-											Only <span th:text="${book.quantity}"> </span> In Stock
-										</h4>
-										<h4 th:if="*{book.quantity==0}" style="color: darkred;">Unavailable</h4>
-										<button type="submit" class="btn btn-warning"
-											style="color: black; border: 1px solid black; padding: 10px 40px 10px 40px;">Add
-											to Cart</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-		</form:form>
-	</div>
-</body>
-</html>

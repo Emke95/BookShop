@@ -50,6 +50,16 @@ public class BookController {
 			dataBinder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
 		}
 	}
+	
+	@RequestMapping(value = "/books/{id}")
+	public String showBookById(@PathVariable("id") Long id, Model model) {
+
+		
+		Book book = bookService.findOne(id);
+		model.addAttribute("book", book);
+
+		return "bookDetail";
+	}
 
 	@RequestMapping(value = "/books", method = RequestMethod.GET)
 	public String listBooksPage(Model model,@RequestParam(value = "title", defaultValue = "") String likeName)
