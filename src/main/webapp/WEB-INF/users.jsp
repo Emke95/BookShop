@@ -4,7 +4,7 @@
 <%@ include file="/WEB-INF/include/navbar.jsp"%>
 
 
-<c:url value="/orders?id=" var="viewOrderUrl" />
+<c:url value="/searchByUser?id=" var="viewOrderUrl" />
 
 <div class="container">
 

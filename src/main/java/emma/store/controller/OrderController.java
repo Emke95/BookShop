@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,6 @@ import emma.store.service.*;
 public class OrderController {
 	
 	private ShippingAddress shippingAddress = new ShippingAddress();
-	private BillingAddress billingAddress = new BillingAddress();
 	private Payment payment = new Payment();
 
 	@Autowired
@@ -69,6 +69,19 @@ public class OrderController {
 		List<OrderDemo> orderDemos = orderDemoService.findAll();
 		model.addAttribute("orderDemoList", orderDemos);
 		return "orders";
+	}
+	
+	@RequestMapping(value="/searchByUser")
+	public String showOrderUser(@RequestParam("id") Long id, Principal principal, Model model)
+	{
+		String email = principal.getName();
+		User user = userService.findByEmail(email);
+		id = user.getId();
+		
+		List<OrderDemo> orderDemos = orderDemoService.findByUserId(id);
+		model.addAttribute("orderDemoList", orderDemos);
+		return"orders";
+		
 	}
 
 	@RequestMapping("/addPaymentMethod")
@@ -139,7 +152,6 @@ public class OrderController {
 
 		model.addAttribute("shippingAddress", shippingAddress);
 		model.addAttribute("payment", payment);
-		model.addAttribute("billingAddress", billingAddress);
 		model.addAttribute("cartItemList", cartItemList);
 		model.addAttribute("shoppingCart", user.getShoppingCart());
 
@@ -155,8 +167,7 @@ public class OrderController {
 
 	@RequestMapping(value = "/checkout", method = RequestMethod.POST)
 	public String checkoutPost(@ModelAttribute("shippingAddress") ShippingAddress shippingAddress,
-			@ModelAttribute("billingAddress") BillingAddress billingAddress, @ModelAttribute("payment") Payment payment,
-			@ModelAttribute("billingSameAsShipping") String billingSameAsShipping,
+			@ModelAttribute("payment") Payment payment,
 			@ModelAttribute("shippingMethod") String shippingMethod, Principal principal, Model model) {
 
 		String email = principal.getName();
@@ -201,7 +212,6 @@ public class OrderController {
 
 			model.addAttribute("shippingAddress", shippingAddress);
 			model.addAttribute("payment", payment);
-			model.addAttribute("billingAddress", billingAddress);
 			model.addAttribute("cartItemList", cartItemList);
 			model.addAttribute("shoppingCart", user.getShoppingCart());
 
@@ -280,6 +290,15 @@ public class OrderController {
 		cart.addBook(book, 1);
 		return "redirect:/cart";
 	}
+	
+	@Transactional
+	@RequestMapping(value= "cart/remove/{isbn}")
+	public String removeFromCart(@PathVariable("isbn") String isbn)
+	{
+		Book book = bookService.findByIsbn(isbn);
+		cart.removeBook(book);
+		return "redirect:/cart";
+	}
 
 	@RequestMapping(value = "/confirmOrder", method = RequestMethod.POST)
 	public String confirmOrder(HttpSession httpSession, RedirectAttributes redirectAttributes, Principal principal){
@@ -291,7 +310,7 @@ public class OrderController {
 		{
 			String email = principal.getName();
 			orderDemoService.addOrderDemo(cart.getContents(), userService.findByEmail(email));
-			redirectAttributes.addFlashAttribute("cartMessage", "Order is confirmed. Total cost: " + cart.getTotalCost());
+			redirectAttributes.addFlashAttribute("cartMessage", "Order is confirmed. Total cost: $" + cart.getTotalCost());
 			cart.clearCart();
 			return "redirect:/cart";
 		}	}

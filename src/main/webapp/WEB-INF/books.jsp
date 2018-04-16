@@ -50,15 +50,15 @@
 				</thead>
 				<thead>
 					<tr>
-						<th class="text-center "><a href="${IsbnAscURL}">Low</a> Isbn
-							<a href="${IsbnDescURL}">High</a></th>
-						<th class="text-center"><a href="${AscURL}">A-Z</a> Title <a
-							href="${DescURL}">Z-A</a></th>
-						<th class="text-center"><a href="${AuAscURL}">A-Z</a> Author
-							<a href="${AuDescURL}">Z-A</a></th>
+						<th class="text-center "><a href="${IsbnAscURL}">v</a> Isbn
+							<a href="${IsbnDescURL}">^</a></th>
+						<th class="text-center"><a href="${AscURL}">v</a> Title <a
+							href="${DescURL}">^</a></th>
+						<th class="text-center"><a href="${AuAscURL}">v</a> Author
+							<a href="${AuDescURL}">^</a></th>
 						<th class="text-center">Category</th>
-						<th class="text-center"><a href="${PriceAscURL}">Low</a>
-							Price <a href="${PriceDescURL}">High</a></th>
+						<th class="text-center"><a href="${PriceAscURL}">v</a>
+							Price <a href="${PriceDescURL}">^</a></th>
 						<th class="text-center">Image</th>
 						<security:authorize access="hasRole('ADMIN')">
 							<th class="text-center col-md-1">Quantity</th>
@@ -86,7 +86,7 @@
 								<security:authorize access="hasRole('ADMIN')">
 									<td>${book.quantity}</td>
 									<td class="text-center"><a
-										href="${pageContext.request.contextPath}/book?isbn=${book.isbn}"
+										href="${editBookUrl}/${book.isbn}"
 										class="btn btn-sm btn-primary"> Edit </a></td>
 									<td class="text-center"><a
 										href="${pageContext.request.contextPath}/bookDelete?isbn=${book.isbn}"

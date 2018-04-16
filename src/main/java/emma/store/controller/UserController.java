@@ -131,9 +131,11 @@ public class UserController {
 
 		model.addAttribute("userBilling", userBilling);
 		model.addAttribute("userPayment", userPayment);
+		
 		List<String> countyList = Counties.listOfIECountyName;
 		Collections.sort(countyList);
 		model.addAttribute("countyList", countyList);
+		
 		model.addAttribute("userPaymentList", user.getUserPaymentList());
 		model.addAttribute("userShippingList", user.getUserShippingList());
 		model.addAttribute("orderList", user.getOrderList());

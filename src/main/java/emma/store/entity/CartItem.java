@@ -34,18 +34,6 @@ public class CartItem {
 	@JoinColumn(name="orderId")
 	private Orders orders;
 	
-	/*@ManyToOne
-	@JoinColumn(name="orderId")
-	private Order order;
-	
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
-	}*/
-
 	public ShoppingCart getShoppingCart() {
 		return shoppingCart;
 	}
